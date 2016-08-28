@@ -2500,7 +2500,7 @@ msgstr "Passwort:"
 
 #: seahub/profile/templates/profile/set_profile.html:35
 msgid "Update"
-msgstr "Aktualisieren"
+msgstr "ändern"
 
 #: seahub/profile/templates/profile/set_profile.html:37
 msgctxt "true name"
@@ -2768,6 +2768,9 @@ msgstr "Anzeigen"
 
 #: seahub/share/templates/share/links.html:48
 #: seahub/share/templates/share/links.html:79
+msgid "Remove_Link"
+msgstr "Freigegebenen Link entfernen"
+
 #: seahub/templates/js/templates.html:1254
 #: seahub/templates/sysadmin/sys_inst_admin.html:36
 #: seahub/templates/sysadmin/sys_publink_admin.html:25
@@ -3945,12 +3948,12 @@ msgstr "Lokal öffnen"
 #: seahub/templates/js/templates.html:258
 #: seahub/templates/view_file_base.html:15
 msgid "starred"
-msgstr "Favorit"
+msgstr "Zu Favoriten hinzufügen"
 
 #: seahub/templates/js/templates.html:260
 #: seahub/templates/view_file_base.html:17
 msgid "unstarred"
-msgstr "Kein Favorit"
+msgstr "Aus Favoriten entfernen"
 
 #: seahub/templates/js/templates.html:276
 #: seahub/templates/js/templates.html:352
@@ -3979,19 +3982,19 @@ msgstr "Abholen gescheitert"
 #: seahub/templates/js/templates.html:421
 #: seahub/templates/snippets/file_share_popup.html:6
 msgid "Download Link"
-msgstr "Download-Link"
+msgstr "Download-Link erstellen"
 
 #: seahub/templates/js/templates.html:425
 msgid "Upload Link"
-msgstr "Upload-Link"
+msgstr "Upload-Link erstellen"
 
 #: seahub/templates/js/templates.html:428
 msgid "Share to user"
-msgstr "Freigabe für Benutzer/in"
+msgstr "Für Seafile-Nutzer freigeben"
 
 #: seahub/templates/js/templates.html:429
 msgid "Share to group"
-msgstr "Freigabe für Gruppe"
+msgstr "Für Seafile-Gruppe freigeben"
 
 #: seahub/templates/js/templates.html:441
 #: seahub/templates/js/templates.html:496

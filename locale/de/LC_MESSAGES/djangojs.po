@@ -604,7 +604,7 @@ msgstr "Erfolgreich gelöscht."
 
 #: static/scripts/app/views/repo.js:220
 msgid "Transfer Library {library_name} To"
-msgstr "Bibliothek {library_name} verschieben nach"
+msgstr "Bibliothek {library_name} übertragen an"
 
 #: static/scripts/app/views/repo.js:259
 msgid "Successfully transferred the library."
