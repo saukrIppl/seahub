@@ -1,0 +1,142 @@
+{% extends "sysadmin/base.html" %}
+{% load seahub_tags i18n %}
+{% block cur_org %}tab-cur{% endblock %}
+
+{% block left_panel %}{{block.super}}
+<form action="{% url 'sys_org_search' %}" method="get" class="side-search-form">
+    <input type="text" name="name" class="input" value="" placeholder="Search orgs by name..." />
+</form>
+{% endblock %}
+
+{% block right_panel %}
+<div class="tabnav">
+    <ul class="tabnav-tabs">
+        <li class="tabnav-tab {% if all_page %}tabnav-tab-cur{% endif %}"><a href="{% url 'sys_org_admin' %}">{% trans "All" %}</a></li>
+        {% if enable_org_plan %}
+        <li class="tabnav-tab {% if paid_page %}tabnav-tab-cur{% endif %}"><a href="{% url 'sys_org_admin' %}?filter=paid">Paid</a></li>
+        {% endif %}
+    </ul>
+    <button id="add-btn" class="fright">{% trans "Add organization" %}</button>
+</div>
+
+<form id="add-org-form" action="" method="post" class="hide">{% csrf_token %}
+    <h3>{% trans "Add organization" %}</h3>
+    <label for="id_name">{% trans "Name" %}</label><br />
+    <input type="text" name="name" id="id_name" class="input" /><br />
+
+    <label for="id_url">{% trans "Url Prefix" %}</label><br />
+    <input type="text" name="url" id="id_url" class="input" /><br />
+
+    <label for="id_owner">{% trans "Owner" %}</label><span class="icon-question-sign" title="{% trans "Owner can use admin panel in an organization, must be a new account." %}" style="color:#666; margin-left:3px;"></span><br />
+    <input type="text" name="owner" id="id_owner" class="input" /><br />
+    <label for="id_password1">{% trans "Password" %}</label><br />
+    <input type="password" name="password1" id="id_password1" class="input" /><br />    
+    <label for="id_password2">{% trans "Confirm Password" %}</label><br />
+    <input type="password" name="password2" id="id_password2" class="input" /><br />    
+
+    <p class="error hide"></p>
+    <button type="submit" class="submit">{% trans "Submit" %}</button>
+</form>
+
+{% if orgs %}
+
+{% include "sysadmin/org_admin_table.html" %}
+
+  {% if not hide_paginator %}
+  {% include "snippets/admin_paginator.html" %}
+  {% endif %}
+{% else %}
+<p>{% trans "None." %}</p>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript">
+$('#add-btn').click(function() {
+        $('#add-org-form').modal();
+        $('#simplemodal-container').css({'width':'auto'});
+});
+
+addConfirmTo($('.remove-btn'), {
+    'title':"Delete org",
+    'con':"{% trans "Are you sure you want to delete %s ?" %}",
+    'post': true // post request
+});
+
+$('#add-org-form').submit(function() {
+    var form = $(this),
+        form_id = form.attr('id'),
+        submit_btn = form.find('[type="submit"]'),
+        name = $.trim(form.children('[name="name"]').val()),
+        url_prefix = $.trim(form.children('[name="url"]').val()),
+        owner = $.trim(form.children('[name="owner"]').val()),
+        pwd1 = $.trim(form.children('[name="password1"]').val()),
+        pwd2 = $.trim(form.children('[name="password2"]').val());
+
+    if (!name) {
+        apply_form_error(form_id, "{% trans "Name can not be blank"%}");
+        return false;
+    }
+    if (!url_prefix) {
+        apply_form_error(form_id, "{% trans "Url can not be blank"%}");
+        return false;
+    }
+    if (!owner) {
+        apply_form_error(form_id, "{% trans "Owner can not be blank"%}");
+        return false;
+    }
+    if (!pwd1) {
+        apply_form_error(form_id, "{% trans "Password can not be blank" %}");
+        return false;
+    } 
+    if (!pwd2) {
+        apply_form_error(form_id, "{% trans "Please enter the password again" %}");
+        return false;
+    } 
+    if (pwd1 != pwd2) {
+        apply_form_error(form_id, "{% trans "Passwords do not match" %}");
+        return false;
+    } 
+
+    disable(submit_btn);
+    $.ajax({
+        url: '{% url 'org_add' %}',
+        type: 'POST',
+        datatype: 'json',
+        cache: false,
+        beforeSend: prepareCSRFToken,
+        data: {
+            'org_name': name,
+            'name': owner,
+            'url_prefix': url_prefix,
+            'email': owner,
+            'password1': pwd1,
+            'password2': pwd2
+        },
+        success: function(data) {
+            if (data['success']) {
+                location.reload(true);
+            }   
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.responseText) {
+                apply_form_error(form_id, $.parseJSON(jqXHR.responseText).error);
+            } else {
+                apply_form_error(form_id, "{% trans "Failed. Please check the network." %}");
+            }
+        }
+    }).complete(function() {
+        enable(submit_btn);
+    });
+
+    return false;
+});
+
+addConfirmTo($('.unset-trial'), {
+    'title':"{% trans "Remove Trial" %}",
+    'con':"{% trans "Are you sure you want to remove trial for %s ?" %}"
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends base_template %}
+{% load seahub_tags avatar_tags i18n %}
+{% load url from future %}
+
+{% block sub_title %}{{filename}} - {% endblock %}
+
+{% block extra_style %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/file_view_extra.css" />
+{% endblock %}
+
+{% block main_panel %}
+    <div id="view-hd">
+        <h2>{{ filename }}
+            {% if is_starred %}
+            <a id="file-star" class="no-deco icon-star" href="#" title="{% trans "starred" %}" aria-label="{% trans "starred" %}"></a>
+            {% else %}
+            <a id="file-star" class="no-deco icon-star-empty" href="#" title="{% trans "unstarred" %}" aria-label="{% trans "unstarred" %}"></a>
+            {% endif %}
+
+            {% if is_pro %}
+            <img class="file-locked-icon cspt vam {% if not file_locked %}hide{% endif %}" width="16" src="{{ MEDIA_URL }}img/file-locked-32.png" alt="{% trans "locked" %}" title="{% trans "locked" %}" aria-label="{% trans "locked" %}" />
+            {% endif %}
+        </h2>
+    </div>
+
+    <div id="view-path-op">
+        <p class="file-path">
+        {% trans "Current Path: "%}
+        {% for name, link in zipped %}
+            {% if not forloop.last %}
+                <a href="{% url 'view_common_lib_dir' repo.id link|strip_slash %}">{{ name }}</a> /
+            {% else %}
+                {{ name }}
+            {% endif %}
+        {% endfor %}
+        </p>
+    </div>
+
+    <div id="file">
+        <div id="file-op">
+            <div class="commit fleft">
+                {% avatar latest_contributor 24 %} <a href="{% url 'user_profile' latest_contributor %}" class="name">{{ latest_contributor|email2nickname }}</a>
+                <span class="time">{{ last_modified|translate_seahub_time}}</span>
+                {% block update_detail %}
+                {% if last_commit_id %}
+                  <span>{% trans "updated this file"%}.</span>
+                {% endif %}
+                {% endblock %}
+
+            </div>
+
+            {% if can_lock_unlock_file %}
+                {% if not file_locked %}
+                    <button id="lock-file">{% trans "Lock" %}</button>
+                    <button id="unlock-file" class="hide">{% trans "Unlock" %}</button>
+                {% elif locked_by_me %}
+                    <button id="unlock-file">{% trans "Unlock" %}</button>
+                    <button id="lock-file" class="hide">{% trans "Lock" %}</button>
+                {% endif %}
+            {% endif %}
+
+            {% if not repo.encrypted %}
+            {% if request.user.permissions.can_generate_shared_link %}
+            <button id="share" data-link="{{ file_shared_link }}" data-token="{{ fileshare.token }}">{% trans "Share" %}</button>
+            {% endif %}
+            {% endif %}
+
+            {% if file_perm == 'rw' %}
+            <a class="btn-link" id="history" href="{% url 'file_revisions' repo.id %}?p={{ path|urlencode }}">{% trans "History" %}</a>
+            {% endif %}
+
+            {% if request.user.is_authenticated and can_edit_file %}
+                {% block edit_file %}
+                {% endblock %}
+            {% endif %}
+
+            <a class="btn-link" href="?dl=1" id="download">{% trans "Download"%}</a>
+        </div>
+
+        <div id="file-view">
+          {% if err %}
+            <div id="file-view-tip">
+            {% if err != 'invalid extension' %}
+                <p class="error">{{ err }}</p>
+            {% endif %}
+            </div>
+          {% else %}
+          {% block file_view %}{% endblock %}
+          {% endif %}
+        </div>
+    </div>
+
+    {% include "snippets/file_share_popup.html" %}
+
+    <div id="side-toolbar">
+        <ul class="side-toolbar">
+            <li class="item hide" id="back-to-top" title="{% trans "Back to top" %}"><img src="{{MEDIA_URL}}img/top.png" alt="{% trans "top" %}" /></li>
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block extra_script %}
+{% if highlight_keyword %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/findAndReplaceDOMText.js"></script>
+{% endif %}
+<script type="text/javascript">
+// download
+$(function() {
+    var dld_url = $('#download').attr('href');
+    $('#file-view-tip').append('<a href="' + dld_url + '" class="btn-link big-btn-link">' + "{% trans "Download" %}" + '</a>');
+});
+
+// share link
+{% include "snippets/shared_link_js.html" %}
+$('#share').click(function() {
+    var op = $(this),
+        name = "{{filename|escapejs}}",
+        path = "{{path|escapejs}}";
+        aj_data = {
+            'repo_id': "{{ repo.id }}",
+            'p': path,
+            'type': 'f'
+        },
+        type = 'f',
+        cur_path = path.substr(0, path.length - name.length);
+    showSharePopup(op, name, aj_data, type, cur_path);
+    return false;
+});
+
+
+// star file
+$('#file-star').click(function() {
+    var op_icon = $(this), url_base;
+
+    if (op_icon.hasClass('icon-star-empty')) {
+        url_base = '{% url 'repo_star_file' repo.id %}';
+    } else {
+        url_base = '{% url 'repo_unstar_file' repo.id %}';
+    }
+
+    $.ajax({
+        url: url_base + '?file=' + e("{{path|escapejs}}"),
+        cache: false,
+        dataType: 'json',
+        success:function(data) {
+            op_icon.toggleClass('icon-star-empty icon-star');
+        },
+        error: ajaxErrorHandler
+    });
+
+    return false;
+});
+
+{% if can_lock_unlock_file %}
+// lock/unlock file
+$('#lock-file, #unlock-file').click(function() {
+    var op = $(this).attr('id') == 'lock-file' ? 'lock' : 'unlock',
+        path = '{{path|escapejs}}';
+    $.ajax({
+        url: '{% url 'api-v2.1-file-view' repo.id %}' + '?p=' + encodeURIComponent(path),
+        type: 'PUT',
+        dataType: 'json',
+        cache: false,
+        beforeSend: prepareCSRFToken,
+        data: {'operation': op},
+        success: function() {
+            $('#lock-file, #unlock-file, .file-locked-icon').toggleClass('hide');
+        },
+        error: ajaxErrorHandler
+    });
+});
+{% endif %}
+
+// set 'side toolbar' position
+function setToolbarPos() {
+    var toolbar = $('#side-toolbar');
+
+    // set toolbar pos
+    toolbar.css({'top': ($(window).height() - toolbar.outerHeight())/2});
+}
+(function () {
+    var to_top = $('#back-to-top');
+    to_top.click(function() {
+        $(window).scrollTop(0);
+    });
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 0) {
+            to_top.show();
+        } else {
+            to_top.hide();
+        }
+    });
+})();
+$(window).load(setToolbarPos).resize(setToolbarPos);
+
+{% if filetype == 'PDF' and use_pdfjs %}
+{% else %}
+function setFileViewAreaHeight() {
+    var file_view = $('#file-view');
+    if ($(window).height() > file_view.outerHeight(true) + file_view.offset().top) {
+        file_view.outerHeight($(window).height() - file_view.offset().top);
+    }
+}
+$(window).load(setFileViewAreaHeight).resize(setFileViewAreaHeight);
+{% endif %}
+
+
+{% if highlight_keyword %}
+var ref_list = document.referrer.split('?');
+// referrer is 'search result' page, i.e, '{{SITE_ROOT}}search/?q=xx..'
+if (ref_list.length > 1 && ref_list[0].indexOf('search') > 0) {
+    var search_params = ref_list[1].split('&');
+    var search_keyword = search_params[0].substr(2); // get 'xx' from 'q=xx'
+
+    var highlight_kw = function(hl_area) { // 'hl_area': a node
+        findAndReplaceDOMText(hl_area, {
+            find: new RegExp(search_keyword, 'gim'),
+            replace: function(portion, match) { // portion is a part of a match
+                var node = document.createElement('span');
+                node.style.background = '#ffe761';
+                node.innerHTML = portion.text; // portion is an object
+                return node;
+            }
+        });
+    };
+}
+
+$(window).load(function() {
+    if (highlight_kw) {
+        // hl kw in file title
+        highlight_kw($('#view-hd')[0]);
+
+        // hl kw in file content
+        if ('{{filetype}}' == 'Markdown') {
+            highlight_kw($('#file-view')[0]);
+        }
+        if ('{{fileext}}' == 'text' || '{{fileext}}' == 'txt') {
+            setTimeout(function(){ highlight_kw($('.CodeMirror')[0]); }, 500);
+        }
+    }
+});
+{% endif %}
+</script>
+{% endblock %}

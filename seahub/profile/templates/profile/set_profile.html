@@ -1,0 +1,184 @@
+{% extends "myhome_base.html" %}
+{% load avatar_tags i18n %}
+{% load url from future %}
+
+{% block sub_title %}{% trans "Settings" %} - {% endblock %}
+
+{% block left_panel %}
+<div class="side-textnav">
+    <ul class="side-textnav-tabs">
+        <li class="tab"><a href="#user-basic-info">{% trans "Profile" %}</a></li>
+        <li class="tab"><a href="#lang-setting">{% trans "Language" %}</a></li>
+        {% if user.permissions.can_add_repo %}
+        <li class="tab"><a href="#default-lib">{% trans "Default Library" %}</a></li>
+        {% endif %}
+        <li class="tab"><a href="#del-account">{% trans "Delete Account" %}</a></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block right_panel %}
+<h2>{% trans "Settings" %}</h2>
+
+<div id="user-basic-info" class="setting-item">
+    <h3>{% trans "Profile Setting" %}</h3>
+    <div id="user-avatar-change">
+        <label>{% trans "Avatar:" %}</label>{% avatar request.user.username 80 %}
+        <form id="user-avatar-form" enctype="multipart/form-data" method="post" action="{% url 'avatar_add' %}" class="ovhd">{% csrf_token %}
+            <button type="button" id="user-avatar-chg-btn">{% trans "Change" %}</button>
+            <input type="file" name="avatar" id="user-avatar-input" />
+        </form>
+    </div>
+
+    <form action="" method="post">{% csrf_token %}
+        {% if not is_ldap_user %}
+        <label>{% trans "Password:" %}</label><a href="{{ SITE_ROOT }}accounts/password/change/">{% trans "Update" %}</a><br/>
+        {% endif %}
+        <label>{% trans "Name:" context "true name" %}</label><input type="text" name="nickname" value="{{ form.data.nickname }}" class="input" />
+        {% for error in form.nickname.errors %}
+        <span class="error">{{ error|escape }}</span>
+        {% endfor %}
+        <br/>
+
+        {% if form.data.login_id %}
+        <label>{% trans "Username:" %}</label><input type="text" name="username" value="{{form.data.login_id}}" class="input" disabled />
+        <span>{% trans "You can use this field at login." %}</span>
+        <br/>
+        {% endif %}
+
+        {% if form.data.contact_email %}
+        <label>{% trans "Contact Email:" %}</label><input type="text" name="contact_email" value="{{form.data.contact_email}}" class="input" disabled />
+        <span>{% trans "Your notifications will be sent to this email." %}</span>
+        <br/>
+        {% endif %}
+
+        {% if form.department and form.telephone %}
+        <label>{% trans "Department:" %}</label><input type="text" name="department" value="{{ form.data.department }}" class="input" />
+        {% for error in form.department.errors %}
+        <span class="error">{{ error|escape }}</span>
+        {% endfor %}
+        <br/>
+        <label>{% trans "Telephone:" %}</label><input type="text" name="telephone" value="{{ form.data.telephone }}" class="input" />
+        {% for error in form.telephone.errors %}
+        <span class="error">{{ error|escape }}</span>
+        {% endfor %}
+        <br/>
+        {% endif %}
+
+        <input type="submit" value="{% trans "Submit" %}" class="submit" />
+    </form>
+</div>
+
+<div class="setting-item" id="lang-setting">
+    <h3>{% trans "Language Setting" %}</h3>
+    <a href="#" id="lang-context" data-lang="{{ LANGUAGE_CODE }}">{{ LANGUAGE_CODE|language_name_local }} <span class="icon-caret-down"></span></a>
+    <ul id="lang-context-selector" class="hide">
+        {% for LANG in LANGUAGES %}
+        <li><a href="{% url 'i18n' %}?lang={{ LANG.0 }}">{{ LANG.1 }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if user.permissions.can_add_repo %}
+
+<div class="setting-item" id="default-lib">
+    <h3>{% trans "Default Library Setting" %}</h3>
+    {% if default_repo %}
+    <p>{% trans "Your default library:" %} <a href="{% url 'view_common_lib_dir' default_repo.id '' %}">{{default_repo.name}}</a>.</p>
+    {% endif %}
+    <p>{% trans "Default library is the default place to store your personal documents and pictures." %}</p>
+    <button id="default-lib">{% trans "Choose Default Library" %}</button>
+</div>
+
+{% endif %}
+
+<div class="setting-item" id="del-account">
+<h3>{% trans "Delete Account" %}</h3>
+<p>{% trans "This operation will not be reverted. Please think twice!" %}</p>
+<button type="button" id="account-delete-btn">{% trans "Delete" %}</button>
+
+<form id="account-delete-form" class="hide" method="post" action="{% url 'delete_user_account' %}">{% csrf_token %}
+    <input type="submit" value="{% trans "Delete" %}" class="submit" />
+</form>
+</div>
+
+<form id="default-lib-form" action="{% url 'default_repo' %}" method="post" class="file-choose-form hide">{% csrf_token %}
+    <h3 id="dialogTitle">{% trans "Choose default library:" %}</h3>
+    <div class="dir-tree-cont">
+      <div id="repos-dirs"></div>
+    </div>
+    <input type="hidden" name="dst_repo" value="" />
+    <p class="error hide">{% trans "Please click and choose a library."%}</p>
+    <input type="submit" value="{% trans "Submit"%}" class="submit" />
+    <button class="simplemodal-close">{% trans "Cancel"%}</button>
+</form>
+
+{% endblock %}
+
+{% block extra_script %}
+{% include 'snippets/avatar_upload_js.html' %}
+<script type="text/javascript">
+var cur_avatar = $('#user-avatar-change .avatar');
+$('#user-avatar-form').css({'left':cur_avatar.position().left + cur_avatar.outerWidth() + 10});
+
+$('#user-basic-info .submit').css({'margin-left': $('#user-basic-info label').outerWidth(true)});
+changeAvatar($('#user-avatar-chg-btn'), $('#user-avatar-input'), $('#user-avatar-form'));
+
+$('#account-delete-btn').click(function () {
+    var title = "{% trans "Delete Account" %}",
+        con = "{% trans "Really want to delete your account?" %}";
+
+    $('#confirm-con').html('<h3 id="dialogTitle">' + title + '</h3><p>' + con + '</p>');
+    $('#confirm-popup').modal({appendTo:'#main'});
+    $('#simplemodal-container').css({'height':'auto'});
+
+    $('#confirm-yes').click(function() {
+        $('#account-delete-form').submit();
+    });
+});
+
+
+{% if user.permissions.can_add_repo %}
+var all_repos = [];
+{% for a_repo in owned_repos %}
+    all_repos.push({
+        'data': '{{ a_repo.props.name }}',
+        'attr': {'repo_id': '{{ a_repo.props.id }}', 'root_node': true},
+    });
+{% endfor %}
+$('#default-lib').click(function() {
+    var form = $('#default-lib-form'),
+        file_tree = new FileTree();
+    form.modal({appendTo:'#main', autoResize:true, focus:false});
+    file_tree.renderDirTree($('#repos-dirs').data('site_root', '{{SITE_ROOT}}'), form, all_repos);
+});
+$('#default-lib-form').submit(function() {
+    var dst_repo = $('[name="dst_repo"]', $(this)).val();
+    if (!$.trim(dst_repo)) {
+        $('.error', $(this)).removeClass('hide');
+        return false;
+    }
+});
+{% endif %}
+
+(function() {
+    var lang_context = $('#lang-context'),
+        lang_selector = $('#lang-context-selector');
+
+    lang_context.parent().css({'position':'relative'});
+    lang_selector.css({'top': lang_context.position().top + lang_context.height() + 3});
+
+    lang_context.click(function() {
+        lang_selector.toggleClass('hide');
+        return false;
+    }).focus(function() { $(this).blur(); });
+
+    $(document).click(function(e) {
+        var element = e.target || e.srcElement;
+        if (element.id != 'lang-context-selector' && element.id != 'lang-context') {
+            lang_selector.addClass('hide');
+        }
+    });
+})();
+</script>
+{% endblock %}

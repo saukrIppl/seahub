@@ -1,0 +1,176 @@
+{% load i18n %}
+{% if not err %}
+
+{% if filetype == 'Text' %}
+    {% ifnotequal file_content None %}
+    var editor = CodeMirror.fromTextArea($('#docu-view')[0], {
+        {% include 'snippets/editor_set_mode.html' %}
+        theme: 'default',
+        indentUnit: 4,
+        {% if fileext != 'txt' and fileext != 'text' %}
+        lineNumbers: true,
+        {% endif %}
+        lineWrapping: true,
+        readOnly: true
+    });
+    {% endifnotequal %}
+{% endif %}
+
+{% if filetype == 'Image' %}
+window.onload = function () {
+    var img = $('#image-view');
+    var img_h = img.outerHeight();
+    var file_view_h = parseInt($('#file-view').css('min-height'));
+    {% if img_prev or img_next %}
+    var prev_next_h = $('#img-prev-next').outerHeight(true);
+    {% else %}
+    var prev_next_h = 0;
+    {% endif %}
+    if (img_h < file_view_h - prev_next_h) {
+        img.css({'margin-top':(file_view_h - img_h - prev_next_h)/2});
+    }
+    if (img.width() > 946) {
+        img.width(946);
+    }
+    img.removeClass('vh');
+}
+    {% if img_prev or img_next %}
+    var input_focus = false;
+    $('input, textarea').focus(function() {
+        input_focus = true;
+    }).blur(function() {
+        input_focus = false;
+    });
+    $('body').bind('keydown', function(e) {
+        if (!input_focus) { // so cursor move in form input element can work normally
+            {% if img_prev %}
+            if (e.keyCode == 37) { // press '<-'
+                location.href = $('#img-prev').attr('href');
+            }
+            {% endif %}
+            {% if img_next %}
+            if (e.keyCode == 39) { // press '->'
+                location.href = $('#img-next').attr('href');
+            }
+            {% endif %}
+        }
+    })
+    {% endif %}
+{% endif %}
+
+{% if filetype == 'SVG' %}
+    if (!$.browser.mozilla && !$.browser.safari && !($.browser.msie && parseInt($.browser.version) > 8)) {
+        $('#file-view').html('<div id="file-view-tip"><p>' + "{% trans "To view it online, you can use firefox, chrome or IE 9." %}" + '</p></div>');
+    } else {
+        $('#file-view').html('<iframe src="{{ raw_path }}" frameborder="0" id="svg-view"></iframe>');
+    }
+{% endif %}
+
+{% if filetype == 'Markdown' %}
+    {% ifnotequal file_content None %}
+    var renderer = new marked.Renderer();
+    // remove 'id' attribute for headings
+    renderer.heading = function (text, level) {
+        return '<h' + level + '>' + text + '</h' + level + '>';
+    };
+    marked.setOptions({
+        renderer: renderer,
+        breaks: true, // keep linebreak
+        smartLists: true,
+        sanitize: true // Ignore any HTML that has been input
+    });
+    $('#md-view').html(marked('{{ file_content|escapejs }}')).children(':first').css('margin-top', '0');
+    {% endifnotequal %}
+{% endif %}
+
+{% if filetype == 'Document' or filetype == 'PDF' and not use_pdfjs %}
+    {% include 'snippets/office_convert_js.html' %}
+{% endif %}
+
+{% if filetype == 'SpreadSheet' %}
+    {% include 'snippets/spreadsheet_convert_js.html' %}
+{% endif %}
+
+{% if filetype == 'PDF' and use_pdfjs %}
+try {
+    PDFJS.workerSrc = '{{MEDIA_URL}}js/pdf.worker.js';
+    $('#file-view').html('<div id="pdf"><span class="loading-icon loading-tip"></span></div>');
+    PDFJS.getDocument("{{ raw_path|escapejs }}").then(function(pdf) {
+        var $loadingTip = $('#pdf .loading-tip');
+
+        // show at most 50 pages
+        var shownPageCount = pdf.numPages < 50 ? pdf.numPages : 50;
+
+        var getPageAndRender = function (pageNumber) {
+            pdf.getPage(pageNumber).then(function(page) {
+                var scale = 1.5;
+                var viewport = page.getViewport(scale);
+                var $canvas = $('<canvas class="pdf-page"></canvas>').attr({
+                    'height': viewport.height,
+                    'width': viewport.width
+                });
+                $loadingTip.before($canvas);
+                page.render({
+                    canvasContext: $canvas[0].getContext('2d'),
+                    viewport: viewport
+                });
+
+                if (pageNumber < shownPageCount) {
+                    pageNumber++;
+                    getPageAndRender(pageNumber);
+                } else {
+                    // the last page
+                    $loadingTip.hide();
+                }
+            });
+        };
+
+        // start from page 1
+        getPageAndRender(1);
+    });
+
+} catch(e) {
+    $('#file-view').html('<div id="file-view-tip"><p>{% trans "You can use IE 10 or other browsers, for example, Firefox, to view it online." %}</p></div>');
+}
+{% endif %}
+
+{% if filetype == 'Video' %}
+      $('#file-view').html('<div class="video-container"><video src="{{raw_path}}" width="800" height="400"></video></div>');
+$('video').mediaelementplayer(/* Options */);
+{% endif %}
+
+{% if filetype == 'Audio' %}
+      $('#file-view').html('<div class="audio-container"><audio src="{{raw_path}}" width="500" height="30"></audio></div>');
+$('audio').mediaelementplayer(/* Options */);
+{% endif %}
+{% if filetype == 'Unknown' %}
+$('#file-view').html('<div id="file-view-tip"></div>');
+{% endif %}
+
+{% endif %}{# 'if not err' ends here. #}
+
+{% if filetype == 'Text' or filetype == 'Markdown' %}
+    $('#file-enc').change(function() {
+        var file_enc = $(this).val();
+        var s = location.search;
+        if (s.indexOf('?') == -1) {
+            location.search = '?file_enc=' + file_enc;
+        } else {
+            if (s.indexOf('file_enc') == -1) {
+                location.search += '&file_enc=' + file_enc; 
+            } else {
+                var params = s.substr(1).split('&');
+                var param;
+                for (var i = 0, len = params.length; i < len; i++) {
+                    param = params[i].split('=');
+                    if (param[0] == 'file_enc') {
+                        param[1] = file_enc;
+                        params[i] = param.join('=');
+                        break;
+                    }
+                }
+                location.search = '?' + params.join('&');
+            }
+        }
+    })
+{% endif %}

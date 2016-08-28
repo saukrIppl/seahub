@@ -1,0 +1,73 @@
+{% extends 'view_file_base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block extra_style %}{{ block.super }}
+{% if not err and not use_pdfjs %}
+    {% include 'snippets/office_convert_style.html' %}
+{% endif %}
+{% endblock %}
+
+{% block file_view %}
+{% if not err and not use_pdfjs %}
+    {% include 'snippets/office_convert_html.html' %}
+{% endif %}
+{% endblock %}
+
+{% block extra_script %}{{ block.super }}
+{% if not err %}
+
+{% if not use_pdfjs %}
+<script type="text/javascript">
+    {% include 'snippets/office_convert_js.html' %}
+</script>
+
+{% else %}
+<script type="text/javascript" src="{{MEDIA_URL}}js/pdf.js"></script>
+<script type="text/javascript">
+try {
+    PDFJS.workerSrc = '{{MEDIA_URL}}js/pdf.worker.js';
+    $('#file-view').html('<div id="pdf"><span class="loading-icon loading-tip"></span></div>');
+    PDFJS.getDocument("{{ raw_path|escapejs }}").then(function(pdf) {
+        var $loadingTip = $('#pdf .loading-tip');
+
+        // show at most 50 pages
+        var shownPageCount = pdf.numPages < 50 ? pdf.numPages : 50;
+
+        var getPageAndRender = function (pageNumber) {
+            pdf.getPage(pageNumber).then(function(page) {
+                var scale = 1.5;
+                var viewport = page.getViewport(scale);
+                var $canvas = $('<canvas class="pdf-page"></canvas>').attr({
+                    'height': viewport.height,
+                    'width': viewport.width
+                });
+                $loadingTip.before($canvas);
+                page.render({
+                    canvasContext: $canvas[0].getContext('2d'),
+                    viewport: viewport
+                });
+
+                if (pageNumber < shownPageCount) {
+                    pageNumber++;
+                    getPageAndRender(pageNumber);
+                } else {
+                    // the last page
+                    $loadingTip.hide();
+                }
+            });
+        };
+
+        // start from page 1
+        getPageAndRender(1);
+    });
+
+} catch(e) {
+    var tip = "{% trans "You can use IE 10 or other browsers, for example, Firefox, to view it online." %}";
+    $('#file-view').html('<div id="file-view-tip"><p>' + tip + '</p></div>');
+}
+</script>
+{% endif %}
+{% endif %}
+
+{% endblock %}

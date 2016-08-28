@@ -1,0 +1,144 @@
+{% load staticfiles i18n %}
+{% load compress %}
+{% load seahub_tags avatar_tags group_avatar_tags %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>{% block sub_title %}{% endblock %}{{ site_title }}</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{% trans "File Collaboration Team Organization" %}" />
+<link rel="icon" type="image/x-icon" href="{{ MEDIA_URL }}img/favicon.png?t=1398068110" />
+<!--[if IE]>
+<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.png?t=1398068110"/>
+<![endif]-->
+
+{% compress css %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/seahub.css?t=1398068110" />
+<link rel="stylesheet" type="text/css" href="{% static "css/select2-3.5.2.css" %}"/>
+<link rel="stylesheet" type="text/css" href="{% static "css/magnific-popup.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "css/backbone.css" %}"/>
+{% endcompress %}
+
+{% block extra_style %}{% endblock %}
+{% if branding_css != '' %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}{{ branding_css }}" />{% endif %}
+</head>
+
+<body>
+    <div id="wrapper" role="application" class="{{ LANGUAGE_CODE }}">
+        <!--[if lt IE 10]>
+        <p id="top-browser-tip">{% trans "We no longer support this version of IE. Please upgrade it to version 10 or above." %} <span class="close">{% trans "Close" %}</span></p>
+        <![endif]-->
+        {% block info_bar_message %}
+        {% if request.user.is_authenticated and request.cur_note %}
+        <div id="info-bar">
+            <p id="info-bar-info">{{ request.cur_note.message|urlize }}</p>
+            <span class="close sf2-icon-x1 op-icon" title="{% trans "Close" %}"></span>
+        </div>
+        {% endif %}
+        {% endblock info_bar_message %}
+
+        <div id="header" role="banner">
+            <div id="header-inner">
+                {% block notice_panel %}{% endblock %}
+                <a href="{{ SITE_ROOT }}" id="logo" class="fleft">
+                    {% if seacloud_mode %}
+                    <img src="{{ MEDIA_URL }}img/seacloud_logo.png?t=1398068110" title="Seacloud" alt="logo" width="186" height="31" />
+                    {% else %}
+                    <img src="{{ MEDIA_URL }}{{ logo_path }}" title="Seafile" alt="logo" width="{{logo_width}}" height="{{logo_height}}" />
+                    {% endif %}
+                </a>
+
+                {% block nav %}{% endblock %}
+
+                {% block header_right %}
+                {% if request.user.is_authenticated %}
+                <div class="fright">
+                {% if has_file_search %}
+                    {% include 'snippets/search_form.html' %}
+                {% endif %}
+
+                <div id="notifications" class="fleft">
+                    <a href="#" class="no-deco" id="notice-icon" title="{% trans "Notifications" %}" aria-label="{% trans "Notifications" %}">
+                        <span class="sf2-icon-bell"></span>
+                        <span class="num hide">0</span>
+                    </a>
+                </div>
+
+                <div id="account" class="fright">
+                    <a id="my-info" href="#" class="no-deco" aria-label="{% trans "View profile and more" %}">
+                        {% avatar request.user 36 %} <span class="icon-caret-down vam"></span>
+                    </a>
+                    {% if request.user.is_staff %}
+                    <div class="manage">
+                        {% block sys_admin %}<a href="{% url 'sysadmin' %}" title="{% trans "System Admin" %}" class="a"><img src="{{ MEDIA_URL }}img/admin_in.png" alt="" /></a>{% endblock %}
+                    </div>
+                    {% endif %}
+                    {% if request.user.org and request.user.org.is_staff %}
+                    <div class="manage">
+                        {% block org_admin %}<a href="{% url 'org_user_admin'%}" title="{% trans "Admin" %}" class="a"><img src="{{ MEDIA_URL }}img/admin_in.png" alt="" /></a>{% endblock %}
+                    </div>
+                    {% endif %}
+                    {% if request.user.inst_admin %}
+                    <div class="manage">
+                        {% block inst_admin %}<a href="{% url "institutions:useradmin" %}" title="{% trans "Admin" %}" class="a"><img src="{{ MEDIA_URL }}img/admin_in.png" alt="" /></a>{% endblock %}
+                    </div>
+                    {% endif %}
+
+                </div>
+                </div>
+                {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <div id="main" class="clear">
+            <div id="left-panel">
+                <div class="side-tabnav hide" id="side-nav" role="navigation" ></div>
+            </div>
+            <div id="right-panel" role="main">
+                {% block right_panel %}{% endblock %}
+            </div>
+            <div id="main-panel" class="clear w100 ovhd">
+                <div id="initial-loading-view">
+                    <span class="loading-icon loading-tip"></span>
+                </div>
+            </div>
+
+            <div id="confirm-popup" class="hide">
+                <div id="confirm-con"></div>
+                <button id="confirm-yes" class="btn">{% trans "Yes"%}</button>
+                <button class="simplemodal-close btn">{% trans "No"%}</button>
+            </div>
+
+            <div id="guide-for-new" class="hide">
+                <span class="icon-lightbulb fleft" aria-hidden="true"></span>
+                <div class="txt">
+                    <h3 id="dialogTitle">{% trans "Welcome to Seafile!" %}</h3>
+                    {% if user.permissions.can_add_repo %}
+                    <p>{% trans "Seafile organizes files into libraries. Each library can be synced and shared separately. We have created a personal library for you. You can create more libraries later." %}</p>
+                    {% else %}
+                    <p>{% trans "Seafile organizes files into libraries. Each library can be synced and shared separately. Howerver, since you are a guest user now, you can not create libraries." %}</p>
+                    {% endif %}
+                    <button class="simplemodal-close" style="margin:8px 0 0 0;">{% trans "Close" %}</button>
+                </div>
+            </div>
+        </div>
+
+        {% include 'footer.html' %}
+        {% include 'js/templates.html' %}
+</div><!-- wrapper -->
+
+<script type="text/javascript">
+var app = {
+    config: {
+        mediaUrl: '{{ MEDIA_URL }}',
+        siteRoot: '{{ SITE_ROOT }}'
+    }
+};
+</script>
+<script src="{{ STATIC_URL }}scripts/i18n/{{ LANGUAGE_CODE }}/djangojs.js"></script>
+
+{% block extra_script %}{% endblock %}
+
+</body>
+</html>

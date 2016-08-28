@@ -1,0 +1,96 @@
+{% extends "sysadmin/base.html" %}
+{% load seahub_tags i18n %}
+{% block cur_users %}tab-cur{% endblock %}
+
+{% block left_panel %}{{block.super}}
+<form action="{% url 'user_search' %}" method="get" class="side-search-form">
+    <input type="text" name="email" class="input" value="" placeholder="{% trans "Search users..." %}" />
+</form>
+{% endblock %}
+
+{% block right_panel %}
+<div class="tabnav ovhd">
+    <ul class="tabnav-tabs fleft">
+        <li class="tabnav-tab"><a href="{% url 'sys_useradmin' %}">{% trans "Database" %}</a></li>
+        {% if have_ldap %}
+        <li class="tabnav-tab"><a href="{% url 'sys_useradmin_ldap' %}">{% trans "LDAP" %}</a></li>
+        <li class="tabnav-tab"><a href="{% url 'sys_useradmin_ldap_imported' %}">{% trans "LDAP(imported)" %}</a></li>
+        {% endif %}
+        <li class="tabnav-tab tabnav-tab-cur"><a href="{% url 'sys_useradmin_admins' %}">{% trans "Admins" %}</a></li>
+    </ul>
+    <button id="add-admin-btn" class="fright">{% trans "Add admin" %}</button>
+</div>
+
+<form id="add-admin-form"  method="post" name="add-admin-form" class="tab-popup hide">{% csrf_token %}
+    <h3 class="hd">{% trans "Add admins"%}</h3>
+    <div id="add-admin-tabs" class="tab-popup-tabs">
+        <ul class="tab-popup-tabs-nav">
+            <li class="tab"><a href="#enter" class="a">{% trans 'Enter' %}</a></li>
+        </ul>
+        <div id="enter">
+            <textarea id="added-member-name" name="user_email" placeholder="{% trans "emails, separated by ','" %}"></textarea><br />
+            <p class="tip">{% trans "Tip: the emails should be the users already added."%}</p>
+        </div>
+    </div>
+    <div class="bot">
+        <p class="error hide"></p>
+        <input type="submit" value="{% trans "Submit"%}" />
+    </div>
+</form>
+
+{% with is_admin_page=True%}
+{% include "sysadmin/useradmin_table.html" %}
+{% endwith %}
+
+<div id="activate-msg" class="hide">
+    <p>{% trans "Activating..., please wait" %}</p>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript">
+$('#add-admin-btn').click(function() {
+    var form = $("#add-admin-form");
+    form.modal({appendTo: "#main", focus:false});
+    $('#simplemodal-container').css({'height':'auto', 'padding':0});
+    $('#add-admin-tabs').tabs();
+});
+$('#add-admin-form').submit(function() {
+    var $form = $(this),
+        emails = $.trim($('[name="user_email"]', $form).val());
+
+    if (!emails) {
+        return false;
+    }
+
+    var $submitBtn = $('[type="submit"]', $form);
+    disable($submitBtn);
+    $.ajax({
+        url: '{% url 'batch_user_make_admin' %}',
+        type: 'POST',
+        dataType: 'json',
+        cache: false,
+        beforeSend: prepareCSRFToken,
+        data: {
+            'set_admin_emails': emails
+        },
+        success: function() {
+            location.reload(true);
+        },
+        error: function(xhr) {
+            var error_msg;
+            if (xhr.responseText) {
+                error_msg = $.parseJSON(xhr.responseText).error;
+            } else {
+                error_msg = "{% trans "Failed. Please check the network." %}";
+            }
+            $('.error', $form).html(error_msg).removeClass('hide');
+            enable($submitBtn);
+        }
+    });
+
+    return false;
+});
+{% include "sysadmin/useradmin_js.html" %}
+</script>
+{% endblock %}

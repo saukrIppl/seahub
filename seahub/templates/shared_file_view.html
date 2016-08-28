@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load seahub_tags i18n %}
+
+{% block extra_style %}
+{% include 'snippets/file_view_style.html' %}
+<style type="text/css">
+    #header {
+        display:block;
+        margin-bottom:12px;
+    }
+</style>
+{% endblock %}
+
+{% block main_panel %}
+    <div id="shared-file-view-hd" class="ovhd">
+        <div class="fleft">
+            <h2 class="ellipsis no-bold" title="{{ file_name }}">{{ file_name }}</h2>
+            {% if zipped %}
+            <p class="cur-path ellipsis">
+              {% trans "Current path: "%} 
+              {% for name, link in zipped %}
+                {% if not forloop.last %}
+                <a href="{{ SITE_ROOT }}d/{{ token }}/?p={{ link|urlencode }}">{{ name }}</a> /               
+                {% else %}
+                {{ name }}
+                {% endif %}
+              {% endfor %}
+              </p>
+            {% else %}
+            <p class="share-by ellipsis">{% trans "Shared by: " %}{{ shared_by|email2nickname }}</p>
+            {% endif %}
+        </div>
+
+        <div class="fright">
+            {% if request.user.is_authenticated and request.user.username != shared_by %}
+              {% if save_to_link %}
+              <button data="{{save_to_link}}" id="save" class="btn">{% trans "Save to..."%}</button>
+              {% endif %}
+            {% endif %}
+            {% if not traffic_over_limit %}
+              <a href="{% if from_shared_dir %}?p={{path|urlencode}}&dl=1{% else %}?dl=1{% endif %}" class="obv-btn">{% trans "Download" %} ({{file_size|filesizeformat}})</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div id="file">
+        {% include 'snippets/file_content_html.html' %}
+    </div>
+
+
+    <form id="file-save-form" action="{{save_to_link}}" method="post" class="file-choose-form hide">{% csrf_token %}
+        <h3>{% trans "Save To:" %}</h3>
+        <div class="dir-tree-cont">
+            <div id="repos-dirs">
+                <span class="loading-icon loading-tip"></span>
+            </div>
+        </div>
+        <input type="hidden" name="s_token" value="{{shared_token}}" />
+        <input type="hidden" name="dst_repo" value="" />
+        <input type="hidden" name="dst_path" value="" />
+        <p class="error hide">{% trans "Please click and choose a directory." %}</p>
+        <button type="submit" class="submit">{% trans "Submit" %}</button>
+        <button class="simplemodal-close">{% trans "Cancel" %}</button>
+    </form>
+    
+{% endblock %}
+
+{% block extra_script %}
+{% include "snippets/file_view_js.html" %}
+<script type="text/javascript">
+$(function() {
+    var dld_btn = $('.obv-btn').clone();
+    dld_btn.html("{% trans "Download" %}").attr('class', 'btn-link big-btn-link');
+    $('#file-view-tip').append(dld_btn);
+
+    {% if traffic_over_limit %}
+    var tip = "{% trans "File download is disabled: the share link traffic of owner is used up." %}";
+    $('#title-panel').html('<p class="alc" style="background:#fddaa4;color:#1f0600;padding:3px 0;margin:0 0 15px;">' + tip + '</p>').removeClass('hide');
+    {% endif %}
+});
+$(function () {
+    $('#view-hd .ellipsis').css({'max-width': $('#view-hd').width() - $('#view-hd .fright').outerWidth(true) - 10});
+});
+
+{% if filetype == 'PDF' and use_pdfjs %}
+{% else %}
+function setFileViewAreaHeight() {
+    var file_view = $('#file-view');
+    if ($(window).height() > file_view.outerHeight(true) + file_view.offset().top) {
+        file_view.outerHeight($(window).height() - file_view.offset().top);
+    }
+}
+$(window).load(setFileViewAreaHeight).resize(setFileViewAreaHeight);
+{% endif %}
+
+{% if request.user.is_authenticated and request.user.username != shared_by %}
+$('#save').click(function() {
+    var form = $('#file-save-form'),
+        file_tree = new FileTree();
+    form.modal({appendTo:'#main', autoResize:true, focus:false});
+    $.ajax({
+        url: '{% url 'unenc_rw_repos' %}',
+        cache: false,
+        dataType: 'json',
+        success: function(data) {
+            var all_repos = [], repo;
+            for (var i = 0, len = data.length; i < len; i++) {
+                repo = data[i];
+                all_repos.push({
+                    'data': repo.name,
+                    'attr': {'repo_id': repo.id, 'root_node': true},
+                    'state': 'closed'
+                });
+            }
+            file_tree.renderDirTree($('#repos-dirs').data('site_root', '{{SITE_ROOT}}'), form, all_repos);
+        }
+    });
+});
+$('#file-save-form').submit(function() {
+    var form = $(this),
+        dst_repo = $('[name="dst_repo"]', form).val(),
+        dst_path = $('[name="dst_path"]', form).val();
+
+    if (!$.trim(dst_repo) || !$.trim(dst_path)) {
+        $('.error', form).removeClass('hide');
+        return false;
+    }
+});
+{% endif %}
+{% include "snippets/file_content_js.html" %}
+</script>
+{% endblock %}
