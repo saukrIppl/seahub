@@ -435,6 +435,7 @@
             <span class="loading-icon loading-tip"></span>
             <% if (!repo_encrypted) { %>
             <div id="download-link-share" class="tabs-panel">
+                <p class="tip">{% trans "You can generate a download link for a folder or a file. People receive this link can view the folder or the file online." %}</p>
                 <form id="generate-download-link-form" action="" class="hide">
                     <label class="checkbox-label">
                         <input type="checkbox" name="use_passwd" class="vam" />
@@ -459,7 +460,7 @@
                         <input type="text" name="expire_days" class="input" id="expire-days" />
                     </div>
                     <p class="error hide"></p>
-                    <input type="submit" value="{% trans 'Generate'%}" />
+                    <input type="submit" value="{% trans 'Generate link'%}" />
                 </form>
                 <div id="download-link-operations" class="hide">
                     <dl>
@@ -478,7 +479,7 @@
                         <label for="extra-msg">{% trans "Message (optional):"%}</label><br />
                         <textarea class="textarea" name="extra_msg" id="extra-msg"></textarea><br />
                         <p class="error hide"></p>
-                        <input type="submit" value="{% trans "Submit" %}" class="submit" />
+                        <input type="submit" value="{% trans "Send" %}" class="submit" />
                         <input type="button" value="{% trans "Cancel"%}" class="cancel" id="cancel-share-download-link" />
                         <p class="sending-tip hide">{% trans "Sending..."%}</p>
                     </form>
@@ -506,7 +507,7 @@
                         <input type="password" name="password_again" class="input" id="u-passwd-again" />
                     </div>
                     <p class="error hide"></p>
-                    <input type="submit" value="{% trans 'Generate'%}" />
+                    <input type="submit" value="{% trans 'Generate link'%}" />
                 </form>
                 <div id="upload-link-operations" class="hide">
                     <p><span class="vam">{% trans 'Upload Link: ' %}</span><span id="upload-link"></span><!--input type="text" readonly="readonly" id="shared-link-text" class="vam" /--></p>
@@ -518,7 +519,7 @@
                         <label for="u-extra-msg">{% trans "Message (optional):"%}</label><br />
                         <textarea class="textarea" name="extra_msg" id="u-extra-msg"></textarea><br />
                         <p class="error hide"></p>
-                        <input type="submit" value="{% trans "Submit" %}" class="submit" />
+                        <input type="submit" value="{% trans "Send" %}" class="submit" />
                         <input type="button" value="{% trans "Cancel"%}" class="cancel" id="cancel-share-upload-link" />
                         <p class="sending-tip hide">{% trans "Sending..."%}</p>
                     </form>
