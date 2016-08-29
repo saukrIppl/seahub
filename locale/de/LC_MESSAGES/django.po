@@ -751,7 +751,7 @@ msgstr[1] "vor %(seconds)d Sekunden"
 #: seahub/templates/sysadmin/userinfo.html:84
 #: seahub/templates/sysadmin/userinfo.html:135
 msgid "Read-Write"
-msgstr "Lesen + Schreiben"
+msgstr "Ansehen + Bearbeiten"
 
 #: seahub/base/templatetags/seahub_tags.py:459
 #: seahub/share/templates/share/list_priv_shared_folders.html:33
@@ -2787,7 +2787,7 @@ msgstr "Sie haben keine Download-Links freigegeben"
 msgid ""
 "You can generate a download link for a folder or a file. People receive this"
 " link can view the folder or the file online."
-msgstr "Sie können einen Download-Link für eine Datei oder einen Ordner erstellen und weitergeben. \nAlle, die über diesen Link verfügen, können die Datei oder den Ordner online einsehen und herunterladen."
+msgstr "Sie können einen Download-Link für eine Datei oder einen Ordner erstellen und weitergeben. Alle, die über diesen Link verfügen, können die Datei oder den Ordner online einsehen und herunterladen."
 
 #: seahub/share/templates/share/links.html:86
 msgid "You don't have any upload link"
@@ -2797,7 +2797,13 @@ msgstr "Sie haben keine Upload-Links freigegeben"
 msgid ""
 "You can generate an upload link from any folder. People receive this link "
 "can upload files to this folder."
-msgstr "Sie können einen Upload-Link für jeden beliebigen Ordner erstellen und weitergeben. \nAlle, die über diesen Link verfügen, können Dateien in den Ordner hochladen."
+msgstr "Sie können einen Upload-Link für jeden beliebigen Ordner erstellen und weitergeben. Alle, die über diesen Link verfügen, können Dateien in den Ordner hochladen."
+
+#: seahub/share/templates/share/links.html:56
+msgid ""
+"You can generate a download link for a folder or a file. People receive this"
+" link can view the folder or the file online."
+msgstr "Sie können einen Download-Link für eine Datei oder einen Ordner erstellen und weitergeben. Alle, die über diesen Link verfügen, können die Datei oder den Ordner online einsehen und herunterladen."
 
 #: seahub/share/templates/share/list_priv_shared_folders.html:5
 msgid "Folders - Share"
@@ -4022,11 +4028,14 @@ msgstr "Anzeigen"
 msgid "Generate a random password"
 msgstr "Zufälliges Passwort erstellen"
 
-#: seahub/templates/js/templates.html:462
 #: seahub/templates/js/templates.html:509
 #: seahub/templates/snippets/file_share_popup.html:33
 msgid "Generate"
 msgstr "Erstellen"
+
+#: seahub/templates/js/templates.html:463
+msgid "Generate link"
+msgstr "Link erstellen"
 
 #: seahub/templates/js/templates.html:466
 #: seahub/templates/snippets/file_share_popup.html:35
