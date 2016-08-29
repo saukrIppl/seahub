@@ -1,0 +1,24 @@
+span.dirent-name a.normal {
+	display: block;
+}
+
+/*Grüner Toast*/
+.messages .success {
+	padding: 15px 50px;
+}
+
+/*Erläuterung im Freigabe-Menü*/
+#share-popup .tip {
+	max-width: initial;
+}
+
+/*Schließen-Button bei Bildern*/
+/*.mfp-close {
+	cursor: -moz-default;
+    cursor: -webkit-default;
+    cursor: default;
+}*/
+
+#share-popup .tabs-panel, #folder-perm-tabs .tabs-panel, #repo-shared-links .tabs-panel, #repo-folder-perm .tabs-panel {
+	max-height: initial;
+}
