@@ -382,7 +382,7 @@ LOGO_WIDTH = 128
 LOGO_HEIGHT = 32
 
 # css to modify the seafile css (e.g. css/my_site.css)
-BRANDING_CSS = ''
+BRANDING_CSS = 'css/custom.css'
 
 # Using Django to server static file. Set to `False` if deployed behide a web
 # server.
