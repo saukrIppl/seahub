@@ -1,3 +1,105 @@
+#del-account,dis#left-panel > div > ul > li:nth-child(4) {
+  display: none;
+}
+
+.left-right-tabs-nav .ui-state-active a,.left-right-tabs-nav .ui-state-active a:hover {
+  background: #56BDC3;
+}
+
+.side-tabnav-tabs .tab-cur a,.side-tabnav-tabs .tab-cur a:hover {
+  background-color: #56BDC3;
+}
+
+#notifications .num {
+  background: #56BDC3;
+}
+
+#notice-popover li.unread {
+  border-left: 2px solid #56BDC3;
+}
+
+#guide-for-new .icon-lightbulb {
+  color: #56BDC3;
+}
+
+a {
+  color: #56BDC3;
+}
+
+a:focus, a:hover {
+    color: #56BDC3;
+    text-decoration: underline;
+}
+
+.tab-popup-tabs-nav .ui-state-active .a,.tab-popup-tabs-nav .tab .a:hover {
+  color: #56BDC3;
+  border-bottom-color: #56BDC3;
+}
+
+.load-more-discussion {
+  color: #56BDC3;
+}
+
+.tabnav-tab-cur a,.tabnav-tab a:hover,.wiki-nav .cur-item .link,.wiki-nav .link:hover,#right-panel .hd .ui-state-active .a,#right-panel .hd .a:hover {
+  color: #56BDC3;
+  border-bottom-color: #56BDC3;
+}
+
+#plans th {
+  color: #56BDC3;
+}
+
+.repo-op .op-link:hover {
+  color: #56BDC3;
+}
+
+.new-narrow-panel .hd {
+  background: #56BDC3;
+}
+
+.side-tabnav h3.hd, .side-tabnav .hd h3 {
+  color: #56BDC3;
+}
+
+.dropdown-menu a:hover {
+    background: #56BDC3;
+}
+
+.op-target {
+    color: #56BDC3;
+}
+
+.op-icon.sf2-x, .op-icon.sf2-x:hover {
+    color: #56BDC3;
+}
+
+.side-tabnav-tabs .tab a:hover {
+    background-color: #f2f2f2;
+}
+
+li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
+    background: #56BDC3;
+}
+
+
+#notifications .num {
+    background: #CC0000;
+    border: 1px solid #CC0000;
+}
+
+
+
+
+
+
+/*__________________________________________Eigene Anpassungen__________________________________________________*/
+
+
+
+
+
+
+
 span.dirent-name a.normal {
 	display: block;
 }
@@ -21,4 +123,22 @@ span.dirent-name a.normal {
 
 #share-popup .tabs-panel, #folder-perm-tabs .tabs-panel, #repo-shared-links .tabs-panel, #repo-folder-perm .tabs-panel {
 	max-height: initial;
+}
+
+.narrow-main-panel {
+	width: 710px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#notifications .num {
+	line-height: 25px;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 13px;
+	padding: 0;
+    top: -15px;
+    left: 12px;
 }
