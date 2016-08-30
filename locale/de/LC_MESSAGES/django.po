@@ -2456,6 +2456,10 @@ msgstr "Nickname darf keinen Schrägstrich enthalten"
 msgid "Profile Setting"
 msgstr "Profileinstellungen"
 
+#: seahub/profile/templates/profile/set_profile.html:69
+msgid "Password Setting"
+msgstr "Passworteinstellungen"
+
 #: seahub/profile/templates/profile/set_profile.html:5
 #: seahub/profile/templates/profile/set_profile.html:21
 #: seahub/templates/base.html:66
@@ -3855,6 +3859,7 @@ msgid "History Setting"
 msgstr "Einstellungen für Versionen"
 
 #: seahub/templates/js/templates.html:51
+#: seahub/profile/templates/profile/set_profile.html:72
 msgid "Change Password"
 msgstr "Passwort ändern"
 
