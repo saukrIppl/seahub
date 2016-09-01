@@ -47,6 +47,8 @@
             {% for commit in commits %}
             <tr>
                 <td class="time">
+                   
+
                     {{ commit.props.ctime|translate_seahub_time }}
                     {% if commit.is_current_version %}
                     {% trans '(current version)' %}
@@ -54,6 +56,11 @@
 
                     {% if commit.rev_renamed_old_path %}
                     <br /><span class="tip">{% blocktrans with old_path=commit.rev_renamed_old_path %}(Renamed or moved from {{ old_path }}){% endblocktrans %}</span>
+                    {% endif %}
+
+                     {% if commit.id = repo.head_cmmt_id %}
+                    
+                    <p class="current-version">{% trans 'Current Version' %}</p>
                     {% endif %}
                 </td>
 
