@@ -14,6 +14,7 @@
         <% } %>
         <% if (enable_encrypted_library) { %>
         <div class="repo-create-encryption">
+            <h4>Verschlüsselung</h4>
             <label class="checkbox-label">
                 <input type="checkbox" name="encryption" id="encrypt-switch" class="vam" />
                 <span class="checkbox-option vam">{% trans "Encrypt" %}</span>
@@ -475,7 +476,7 @@
                     <button id="delete-download-link">{% trans 'Delete' %}</button>
                     <form id="send-download-link-form" action="" class="hide">
                         <label for="email">{% trans "Send to:"%}</label><br />
-                        <input type="text" class="input" name="email" placeholder="{% trans "Emails, Seperated by ','"%}" id="email" /><br />
+                        <input type="text" class="input" name="email" placeholder="{% trans "Emails, Seperated by ','"%}" title="{% trans "Emails, Seperated by ','"%}" id="email" /><br />
                         <label for="extra-msg">{% trans "Message (optional):"%}</label><br />
                         <textarea class="textarea" name="extra_msg" id="extra-msg"></textarea><br />
                         <p class="error hide"></p>
