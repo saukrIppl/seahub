@@ -125,6 +125,10 @@ span.dirent-name a.normal {
 	max-height: initial;
 }
 
+.simplemodal-container {
+  height: 400px;
+}
+
 .narrow-main-panel {
 	width: 710px;
 	margin-right: auto;
