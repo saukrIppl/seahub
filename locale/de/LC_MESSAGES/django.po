@@ -3801,7 +3801,7 @@ msgstr "Rechte für freigebene Bibliothek"
 
 #: seahub/templates/js/templates.html:19
 msgid "Encrypt"
-msgstr "Verschlüsseln"
+msgstr "Mit Passwort verschlüsseln"
 
 #: seahub/templates/js/templates.html:21
 #: seahub/templates/js/templates.html:1408
@@ -4212,12 +4212,12 @@ msgstr "Wiki entfernen"
 #: seahub/templates/js/templates.html:1029
 #: seahub/templates/js/templates.html:1045
 msgid "Import Members"
-msgstr "Mitglieder importieren"
+msgstr "Mitglieder aus CSV importieren"
 
 #: seahub/templates/js/templates.html:1030
 #: seahub/templates/js/templates.html:1046
 msgid "Manage Members"
-msgstr "Mitglieder verwalten"
+msgstr "Mitglieder hinzufügen und verwalten"
 
 #: seahub/templates/js/templates.html:1033
 msgid "Dismiss"
