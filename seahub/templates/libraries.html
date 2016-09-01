@@ -117,7 +117,7 @@
     <div class="outer-caret up-outer-caret"><div class="inner-caret"></div></div>
     <div class="popover-hd ovhd">
         <a href="#" title="{% trans "Close" %}" aria-label="{% trans "Close" %}" class="popover-close close sf2-icon-x1 op-icon fright"></a>
-        <h3 class="popover-title">{% trans "Settings" %}</h3>
+        <h3 class="popover-title">{% trans "Members" %}</h3>
     </div>
     <div class="popover-con">
     </div>
@@ -127,13 +127,22 @@
     <div class="outer-caret up-outer-caret"><div class="inner-caret"></div></div>
     <div class="popover-hd ovhd">
         <a href="#" title="{% trans "Close" %}" aria-label="{% trans "Close" %}" class="popover-close close sf2-icon-x1 op-icon fright"></a>
-        <h3 class="popover-title">{% trans "Members" %}</h3>
+        <h3 class="popover-title">{% trans "Settings" %}</h3>
     </div>
     <div class="popover-con">
-        <div class="loading-icon loading-tip"></div>
-        <ul id="group-member-list" class="hide"></ul>
-        <p class="error hide"></p>
-    </div>
+
+    <ul class="group-setting-list">
+        <li><a href="#" class="group-setting-item popover-item" data-op="rename">Umbenennen</a></li>
+        <li><a href="#" class="group-setting-item popover-item" data-op="transfer">Übertragen</a></li>
+        
+        <li><a href="#" class="group-setting-item popover-item" data-op="add-wiki">Wiki hinzufügen</a></li>
+        
+    </ul>
+    <ul class="last-group-setting-list">
+        <li><a href="#" class="group-setting-item popover-item" data-op="dismiss">Löschen</a></li>
+    </ul>
+
+</div>
 </script>
 
 <script type="text/template" id="group-discussions-tmpl">

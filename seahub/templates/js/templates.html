@@ -738,8 +738,8 @@
         <% if (wiki_enabled) { %>
             <a href="{{SITE_ROOT}}group/<%= id %>/wiki/" class="sf2-icon-wiki2 op-icon group-top-op-icon" title="{% trans "Wiki" %}" id="group-wiki-icon"></a>
         <% } %>
-        <a href="#" class="sf2-icon-cog1 op-icon group-top-op-icon" title="{% trans "Settings" %}" id="group-settings-icon" aria-label="{% trans "Settings" %}"></a>
-        <a href="#" class="sf2-icon-user2 op-icon group-top-op-icon" title="{% trans "Members" %}" id="group-members-icon" aria-label="{% trans "Members" %}"></a>
+        <a href="#" class="sf2-icon-user2 op-icon group-top-op-icon" title="{% trans "Members" %}" id="group-settings-icon" aria-label="{% trans "Members" %}"></a>
+        <a href="#" class="sf2-icon-cog1 op-icon group-top-op-icon" title="{% trans "Settings" %}" id="group-members-icon" aria-label="{% trans "Settings" %}"></a>
         <a href="#" class="sf2-icon-msgs2 op-icon group-top-op-icon" title="{% trans "Discussion" %}" id="group-discussions-icon" aria-label="{% trans "Discussion" %}"></a>
     </div>
 </div>
@@ -1018,22 +1018,12 @@
 
 <script type="text/template" id="group-settings-content-tmpl">
 <% if (is_owner) { %>
+   
     <ul class="group-setting-list">
-        <li><a href="#" class="group-setting-item popover-item" data-op="rename">{% trans "Rename" %}</a></li>
-        <li><a href="#" class="group-setting-item popover-item" data-op="transfer">{% trans "Transfer" %}</a></li>
-        <% if (!wiki_enabled) { %>
-        <li><a href="#" class="group-setting-item popover-item" data-op="add-wiki">{% trans "Add Wiki" %}</a></li>
-        <% } else { %>
-        <li><a href="#" class="group-setting-item popover-item" data-op="remove-wiki">{% trans "Remove Wiki" %}</a></li>
-        <% } %>
-    </ul>
-    <ul class="group-setting-list">
+         <li><a href="#" class="group-setting-item popover-item" data-op="manage-members">{% trans "Manage Members" %}</a></li>
         <li><a href="#" class="group-setting-item popover-item" data-op="import-members">{% trans "Import Members" %}</a></li>
-        <li><a href="#" class="group-setting-item popover-item" data-op="manage-members">{% trans "Manage Members" %}</a></li>
     </ul>
-    <ul class="last-group-setting-list">
-        <li><a href="#" class="group-setting-item popover-item" data-op="dismiss">{% trans "Dismiss" %}</a></li>
-    </ul>
+    
 <% } else if (is_admin) { %>
     <ul class="group-setting-list">
         <li><a href="#" class="group-setting-item popover-item" data-op="rename">{% trans "Rename" %}</a></li>
