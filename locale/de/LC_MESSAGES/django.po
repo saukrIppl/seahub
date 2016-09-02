@@ -751,7 +751,7 @@ msgstr[1] "vor %(seconds)d Sekunden"
 #: seahub/templates/sysadmin/userinfo.html:84
 #: seahub/templates/sysadmin/userinfo.html:135
 msgid "Read-Write"
-msgstr "Ansehen + Bearbeiten"
+msgstr "Lesen und Schreiben"
 
 #: seahub/base/templatetags/seahub_tags.py:459
 #: seahub/share/templates/share/list_priv_shared_folders.html:33
