@@ -14,15 +14,16 @@
         <% } %>
         <% if (enable_encrypted_library) { %>
         <div class="repo-create-encryption">
-            <h4>Verschlüsselung</h4>
             <label class="checkbox-label">
                 <input type="checkbox" name="encryption" id="encrypt-switch" class="vam" />
                 <span class="checkbox-option vam">{% trans "Encrypt" %}</span>
             </label>
-            <label for="passwd">{% trans "Password" %}</label><span class="tip">{% blocktrans %}(at least {{repo_password_min_length}} characters){% endblocktrans %}</span><br />
-            <input type="password" name="passwd" disabled="disabled" class="input input-disabled" id="passwd" /><br />
-            <label for="passwd-again">{% trans "Password again" %}</label><br />
-            <input type="password" name="passwd_again" disabled="disabled" class="input input-disabled" id="passwd-again" />
+            <div class="password-wrapper label-to-hide hide">
+                <label for="passwd">{% trans "Password" %}</label><span class="tip">{% blocktrans %}(at least {{repo_password_min_length}} characters){% endblocktrans %}</span><br />
+                <input type="password" name="passwd" class="input" id="passwd" /><br />
+                <label for="passwd-again">{% trans "Password again" %}</label><br />
+                <input type="password" name="passwd_again" class="input" id="passwd-again" />
+            </div>
         </div>
         <% } %>
         <p class="error hide"></p>
@@ -437,6 +438,8 @@
             <% if (!repo_encrypted) { %>
             <div id="download-link-share" class="tabs-panel">
                 <p class="tip">{% trans "You can generate a download link for a folder or a file. People receive this link can view the folder or the file online." %}</p>
+                <button id="hideshow">Erweiterte Optionen <span class="icon-caret-down vam"></span></button>
+
                 <form id="generate-download-link-form" action="" class="hide">
                     <label class="checkbox-label">
                         <input type="checkbox" name="use_passwd" class="vam" />

@@ -147,17 +147,6 @@ span.dirent-name a.normal {
     left: 12px;
 }
 
-.repo-create-encryption {
-    padding: 10px;
-    background-color: #FAFAFA;
-    border: solid 1px #DDD;
-    border-radius: 3px;
-    box-shadow: inset 0 0 8px #EEE;
-    margin-top: 1em;
-    width: calc(100% - 20px);
-
-}
-
 #repo-name {
 	width: calc(100% - 6px);
 	padding: 3px 3px;
