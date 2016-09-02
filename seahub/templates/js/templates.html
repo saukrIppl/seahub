@@ -1,6 +1,6 @@
 {% load avatar_tags i18n %}
 <script type="text/template" id="create-repo-tmpl">
-    <form id="repo-create-form" action="" method="post" style="width: 268px;">{% csrf_token %}
+    <form id="repo-create-form" action="" method="post">{% csrf_token %}
         <h3 id="dialogTitle">{% trans "New Library"%}</h3>
         <label for="repo-name">{% trans "Name"%}</label><br/>
         <input id="repo-name" type="text" name="repo_name" value="" maxlength="{{max_file_name}}" class="input" /><br />
@@ -27,7 +27,7 @@
         </div>
         <% } %>
         <p class="error hide"></p>
-        <input type="submit" id="create-rep" value="{% trans "Submit"%}" class="submit" />
+        <input type="submit" value="{% trans "Submit"%}" class="submit" />
     </form>
 </script>
 <script type="text/template" id="repo-tmpl">
@@ -438,33 +438,35 @@
             <% if (!repo_encrypted) { %>
             <div id="download-link-share" class="tabs-panel">
                 <p class="tip">{% trans "You can generate a download link for a folder or a file. People receive this link can view the folder or the file online." %}</p>
-                <button id="hideshow">Erweiterte Optionen <span class="icon-caret-down vam"></span></button>
+                <a id="hideshow">Erweiterte Optionen <span id="no-underline" class="icon-caret-down vam"></span></a>
 
                 <form id="generate-download-link-form" action="" class="hide">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="use_passwd" class="vam" />
-                        <span class="checkbox-option vam">{% trans "Add password protection"%}</span>
-                    </label>
-                    <div class="hide">
-                        <label for="passwd">{% trans "Password" %}</label><span class="tip">{% blocktrans %}(at least {{share_link_password_min_length}} characters){% endblocktrans %}</span>
-                        <div class="passwd-wrapper">
-                            <input type="password" name="password" class="passwd input" id="passwd" />
-                            <span title="{% trans "Show" %}" class="icon-eye show-or-hide-password cspt" role="button" tabindex="0" aria-label="{% trans "Show" %}"></span>
-                            <span title="{% trans "Generate a random password" %}" class="icon-magic generate-random-password cspt" role="button" tabindex="0" aria-label="{% trans "Generate a random password" %}"></span>
+                    <div id="extended-options" class="hide">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="use_passwd" class="vam" />
+                            <span class="checkbox-option vam">{% trans "Add password protection"%}</span>
+                        </label>
+                        <div class="hide">
+                            <label for="passwd">{% trans "Password" %}</label><span class="tip">{% blocktrans %}(at least {{share_link_password_min_length}} characters){% endblocktrans %}</span>
+                            <div class="passwd-wrapper">
+                                <input type="password" name="password" class="passwd input" id="passwd" />
+                                <span title="{% trans "Show" %}" class="icon-eye show-or-hide-password cspt" role="button" tabindex="0" aria-label="{% trans "Show" %}"></span>
+                                <span title="{% trans "Generate a random password" %}" class="icon-magic generate-random-password cspt" role="button" tabindex="0" aria-label="{% trans "Generate a random password" %}"></span>
+                            </div>
+                            <label for="passwd-again">{% trans "Password again" %}</label><br />
+                            <input type="password" name="password_again" class="input" id="passwd-again" />
                         </div>
-                        <label for="passwd-again">{% trans "Password again" %}</label><br />
-                        <input type="password" name="password_again" class="input" id="passwd-again" />
-                    </div>
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="set_expiration" class="vam" />
-                        <span class="checkbox-option vam">{% trans "Add auto expiration"%}</span>
-                    </label>
-                    <div class="hide">
-                        <label for="expire-days">{% trans "Days" %}</label><br />
-                        <input type="text" name="expire_days" class="input" id="expire-days" />
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="set_expiration" class="vam" />
+                            <span class="checkbox-option vam">{% trans "Add auto expiration"%}</span>
+                        </label>
+                        <div class="hide">
+                            <label for="expire-days">{% trans "Days" %}</label><br />
+                            <input type="text" name="expire_days" class="input" id="expire-days" />
+                        </div>
                     </div>
                     <p class="error hide"></p>
-                    <input type="submit" value="{% trans 'Generate link'%}" />
+                    <input id="create-link" type="submit" value="{% trans 'Generate link'%}" />
                 </form>
                 <div id="download-link-operations" class="hide">
                     <dl>
@@ -477,9 +479,13 @@
                     </dl>
                     <button id="send-download-link">{% trans 'Send' %}</button>
                     <button id="delete-download-link">{% trans 'Delete' %}</button>
-                    <form id="send-download-link-form" action="" class="hide">
-                        <label for="email">{% trans "Send to:"%}</label><br />
-                        <input type="text" class="input" name="email" placeholder="{% trans "Emails, Seperated by ','"%}" title="{% trans "Emails, Seperated by ','"%}" id="email" /><br />
+                    <form onkeypress="return event.keyCode != 13;" id="send-download-link-form" action="" class="hide">
+                        <label for="email">{% trans "Send to:"%}</label>
+                        <span class="tip">
+                         (E-Mail-Adressen durch Komma getrennt angeben)
+                        </span>
+                        <br />
+                        <input type="text" class="input" name="email" title="{% trans "Emails, Seperated by ','"%}" id="email" /><br />
                         <label for="extra-msg">{% trans "Message (optional):"%}</label><br />
                         <textarea class="textarea" name="extra_msg" id="extra-msg"></textarea><br />
                         <p class="error hide"></p>
@@ -495,20 +501,23 @@
                 <% if (user_perm == 'rw' && !repo_encrypted) { %>
             <div id="dir-upload-link-share" class="tabs-panel hide">
                 <p class="tip">{% trans "You can share the generated link to others and then they can upload files to this directory via the link." %}</p>
+                <a id="hideshow">Erweiterte Optionen <span id="no-underline" class="icon-caret-down vam"></span></a>
                 <form id="generate-upload-link-form" action="" class="hide">
-                    <label class="checkbox-label">
-                        <input type="checkbox" name="use_passwd" class="vam" />
-                        <span class="checkbox-option vam">{% trans "Add password protection"%}</span>
-                    </label>
-                    <div class="hide">
-                        <label for="u-passwd">{% trans "Password" %}</label><span class="tip">{% blocktrans %}(at least {{share_link_password_min_length}} characters){% endblocktrans %}</span>
-                        <div class="passwd-wrapper">
-                            <input type="password" name="password" class="passwd input" id="u-passwd" />
-                            <span title="{% trans "Show" %}" class="icon-eye show-or-hide-password cspt" role="button" tabindex="0" aria-label="{% trans "Show" %}"></span>
-                            <span title="{% trans "Generate a random password" %}" class="icon-magic generate-random-password cspt" role="button" tabindex="0" aria-label="{% trans "Generate a random password" %}"></span>
+                    <div id="extended-options" class="hide">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="use_passwd" class="vam" />
+                            <span class="checkbox-option vam">{% trans "Add password protection"%}</span>
+                        </label>
+                        <div class="hide">
+                            <label for="u-passwd">{% trans "Password" %}</label><span class="tip">{% blocktrans %}(at least {{share_link_password_min_length}} characters){% endblocktrans %}</span>
+                            <div class="passwd-wrapper">
+                                <input type="password" name="password" class="passwd input" id="u-passwd" />
+                                <span title="{% trans "Show" %}" class="icon-eye show-or-hide-password cspt" role="button" tabindex="0" aria-label="{% trans "Show" %}"></span>
+                                <span title="{% trans "Generate a random password" %}" class="icon-magic generate-random-password cspt" role="button" tabindex="0" aria-label="{% trans "Generate a random password" %}"></span>
+                            </div>
+                            <label for="u-passwd-again">{% trans "Password again"%}</label><br />
+                            <input type="password" name="password_again" class="input" id="u-passwd-again" />
                         </div>
-                        <label for="u-passwd-again">{% trans "Password again"%}</label><br />
-                        <input type="password" name="password_again" class="input" id="u-passwd-again" />
                     </div>
                     <p class="error hide"></p>
                     <input type="submit" value="{% trans 'Generate link'%}" />
@@ -517,9 +526,13 @@
                     <p><span class="vam">{% trans 'Upload Link: ' %}</span><span id="upload-link"></span><!--input type="text" readonly="readonly" id="shared-link-text" class="vam" /--></p>
                     <button id="send-upload-link">{% trans 'Send' %}</button>
                     <button id="delete-upload-link">{% trans 'Delete' %}</button>
-                    <form id="send-upload-link-form" action="" class="hide">
-                        <label for="u-email">{% trans "Send to:"%}</label><br />
-                        <input type="text" class="input" name="email" placeholder="{% trans "Emails, Seperated by ','"%}" id="u-email" /><br />
+                    <form onkeypress="return event.keyCode != 13;" id="send-upload-link-form" action="" class="hide">
+                        <label for="u-email">{% trans "Send to:"%}</label>
+                        <span class="tip">
+                         (E-Mail-Adressen durch Komma getrennt angeben)
+                        </span>
+                        <br />
+                        <input type="text" class="input" name="email" id="u-email" /><br />
                         <label for="u-extra-msg">{% trans "Message (optional):"%}</label><br />
                         <textarea class="textarea" name="extra_msg" id="u-extra-msg"></textarea><br />
                         <p class="error hide"></p>

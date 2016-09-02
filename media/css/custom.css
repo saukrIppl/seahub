@@ -160,3 +160,16 @@ span.dirent-name a.normal {
 	background: #56BDC3;
 	color: white;
 }
+
+#hideshow {
+  cursor: pointer;
+}
+
+#hideshow:hover {
+  text-decoration: none;
+  color: #469a9e;
+}
+
+#create-link {
+  margin-top: 8px;
+}

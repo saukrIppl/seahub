@@ -9423,11 +9423,6 @@ function() {
             id: "share-popup",
             template: t.template(e("#share-popup-tmpl").html()),
             initialize: function(t) {
-            	// console.log(e("#hideshow"));
-            	// document.getElementById('hideshow').onclick = function(f) {
-            	//     e("#generate-download-link-form").removeClass("hide")
-            	// }
-            	
                 this.is_repo_owner = t.is_repo_owner, this.is_virtual = t.is_virtual, this.user_perm = t.user_perm, this.repo_id = t.repo_id, this.repo_encrypted = t.repo_encrypted, this.dirent_path = t.dirent_path, this.obj_name = t.obj_name, this.is_dir = t.is_dir, this.render(), this.$el.modal(), e("#simplemodal-container").css({
                     width: "auto",
                     height: "auto"
@@ -9456,6 +9451,7 @@ function() {
                 })), this
             },
             events: {
+                'click #hideshow': "showExtendedFunctions",
                 'click [type="checkbox"]': "clickCheckbox",
                 "submit #generate-download-link-form": "generateDownloadLink",
                 "click #send-download-link": "showDownloadLinkSendForm",
@@ -9477,6 +9473,9 @@ function() {
                 "keydown #generate-upload-link-form .show-or-hide-password": "showOrHideUploadPassword",
                 "click #add-dir-user-share-item .submit": "dirUserShare",
                 "click #add-dir-group-share-item .submit": "dirGroupShare"
+            },
+            showExtendedFunctions: function() {
+                e("#extended-options").toggleClass("hide")
             },
             clickCheckbox: function(t) {
                 var n = e(t.currentTarget);
