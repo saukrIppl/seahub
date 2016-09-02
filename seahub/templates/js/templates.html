@@ -1,6 +1,6 @@
 {% load avatar_tags i18n %}
 <script type="text/template" id="create-repo-tmpl">
-    <form id="repo-create-form" action="" method="post">{% csrf_token %}
+    <form id="repo-create-form" action="" method="post" style="width: 268px;">{% csrf_token %}
         <h3 id="dialogTitle">{% trans "New Library"%}</h3>
         <label for="repo-name">{% trans "Name"%}</label><br/>
         <input id="repo-name" type="text" name="repo_name" value="" maxlength="{{max_file_name}}" class="input" /><br />
@@ -27,7 +27,7 @@
         </div>
         <% } %>
         <p class="error hide"></p>
-        <input type="submit" value="{% trans "Submit"%}" class="submit" />
+        <input type="submit" id="create-rep" value="{% trans "Submit"%}" class="submit" />
     </form>
 </script>
 <script type="text/template" id="repo-tmpl">
