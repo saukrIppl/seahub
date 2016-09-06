@@ -18778,7 +18778,7 @@ function() {
                 })), this.container.on("focus", t, this.bind(function() {
                     if (!this.isInterfaceEnabled()) return;
                     this.container.hasClass("select2-container-active") || this.opts.element.trigger(e.Event("select2-focus")), this.container.addClass("select2-container-active"), this.dropdown.addClass("select2-drop-active"), this.clearPlaceholder()
-                })), this.initContainerWidth(), this.opts.element.hide(), this.clearSearch()
+                })), this.initContainerWidth(), this.opts.element.hide(), this.clearSearch(), console.log(this)
             },
             enableInterface: function() {
                 this.parent.enableInterface.apply(this, arguments) && this.search.prop("disabled", !this.isInterfaceEnabled())
@@ -19343,6 +19343,8 @@ function() {
             fileTemplate: t.template(e("#dirent-file-tmpl").html()),
             dirTemplate: t.template(e("#dirent-dir-tmpl").html()),
             renameTemplate: t.template(e("#rename-form-template").html()),
+            repoDelConfirmTemplate: t.template(e("#repo-del-confirm-template").html()),
+
             initialize: function(e) {
                 a.prototype.initialize.call(this), this.dirView = e.dirView, this.dir = this.dirView.dir, this.listenTo(this.model, "change", this.render), this.listenTo(this.model, "remove", this.remove)
             },
@@ -19464,16 +19466,34 @@ function() {
                 return new s(i), !1
             },
             del: function() {
-                var e = this.model.get("obj_name");
-                return this.model.deleteFromServer({
-                    success: function(t) {
-                        var n = gettext("Successfully deleted %(name)s").replace("%(name)s", r.HTMLescape(e));
-                        r.feedback(n, "success")
-                    },
-                    error: function(e) {
-                        r.ajaxErrorHandler(e)
-                    }
-                }), !1
+                var that = this,
+                    t = this.$(".sf2-icon-delete"),
+                    n = this.$(".op-container").css({
+                        position: "relative"
+                    }),    i = gettext("Really want to delete {lib_name}?").replace("{lib_name}", '<span class="op-target">' + r.HTMLescape(this.model.get("obj_name")) + "</span>"),
+
+                    s = e(this.repoDelConfirmTemplate({
+                        content: i
+                    }));
+                t.after(s), s.css({
+                    left: t.position().left,
+                    top: t.position().top + t.height() + 2,
+                    width: 180
+                }), app.ui.freezeItemHightlight = !1;
+                var o = this;
+                return  e(".no", s).click(function() {
+                            s.addClass("hide").remove(), app.ui.freezeItemHightlight = !1, o.rmHighlight()
+                        }), e(".yes", s).click(function() {
+                            that.model.deleteFromServer({
+                                success: function(t) {
+                                    var n = gettext("Successfully deleted %(name)s").replace("%(name)s", r.HTMLescape(that.model.get("obj_name")));
+                                    r.feedback(n, "success")
+                                },
+                                error: function(e) {
+                                    r.ajaxErrorHandler(e)
+                                }
+                            })
+                        }), !1
             },
             rename: function() {
                 var t = this.model.get("is_dir"),
