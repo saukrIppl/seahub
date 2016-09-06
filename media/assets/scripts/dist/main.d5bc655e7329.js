@@ -19628,6 +19628,7 @@ function() {
             dirOpTemplate: t.template(e("#grid-view-dir-op-tmpl").html()),
             fileTemplate: t.template(e("#grid-view-file-item-tmpl").html()),
             fileOpTemplate: t.template(e("#grid-view-file-op-tmpl").html()),
+            repoDelConfirmTemplate: t.template(e("#repo-del-confirm-template").html()),
             renameTemplate: t.template(e("#dirent-rename-dialog-template").html()),
             initialize: function(e) {
                 this.dirView = e.dirView, this.dir = this.dirView.dir, this.listenTo(this.model, "change", this.render), this.listenTo(this.model, "remove", this.remove)
@@ -19692,18 +19693,37 @@ function() {
             closeMenu: function() {
                 this.$(".grid-item-op").remove()
             },
-            del: function(e) {
+            del: function() {
+                var that = this,
+                    t = this.$(".delete"),
+                    n = this.$(".dropdown-menu").css({
+                        position: "relative"
+                    }),    i = gettext("Really want to delete {lib_name}?").replace("{lib_name}", '<span class="op-target">' + r.HTMLescape(this.model.get("obj_name")) + "</span>"),
+
+                    s = e(this.repoDelConfirmTemplate({
+                        content: i
+                    }));
+                n.after(s), s.css({
+                    position: "absolute",
+                    left: t.position().left,
+                    top: t.position().top + t.height() + 2,
+                    width: 180
+                }), app.ui.freezeItemHightlight = !1;
                 this.closeMenu();
-                var t = this.model.get("obj_name");
-                return this.model.deleteFromServer({
-                    success: function(e) {
-                        var n = gettext("Successfully deleted %(name)s").replace("%(name)s", r.HTMLescape(t));
-                        r.feedback(n, "success")
-                    },
-                    error: function(e) {
-                        r.ajaxErrorHandler(e)
-                    }
-                }), !1
+                var o = this;
+                return  e(".no", s).click(function() {
+                            s.addClass("hide").remove(), app.ui.freezeItemHightlight = !1, o.rmHighlight()
+                        }), e(".yes", s).click(function() {
+                            that.model.deleteFromServer({
+                                success: function(t) {
+                                    var n = gettext("Successfully deleted %(name)s").replace("%(name)s", r.HTMLescape(that.model.get("obj_name")));
+                                    r.feedback(n, "success")
+                                },
+                                error: function(e) {
+                                    r.ajaxErrorHandler(e)
+                                }
+                            })
+                        }), !1
             },
             share: function() {
                 var e = this.dir,
