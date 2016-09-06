@@ -1,6 +1,6 @@
 {% load avatar_tags i18n %}
 <script type="text/template" id="create-repo-tmpl">
-    <form id="repo-create-form" action="" method="post">{% csrf_token %}
+    <form id="repo-create-form" style="width: 268px;" action="" method="post">{% csrf_token %}
         <h3 id="dialogTitle">{% trans "New Library"%}</h3>
         <label for="repo-name">{% trans "Name"%}</label><br/>
         <input id="repo-name" type="text" name="repo_name" value="" maxlength="{{max_file_name}}" class="input" /><br />
@@ -477,7 +477,7 @@
                         <dd id="direct-dl-link"></dd>
                         <% } %>
                     </dl>
-                    <button id="send-download-link">{% trans 'Send' %}</button>
+                    <button id="send-download-link">Link an E-Mail-Adresse senden</button>
                     <button id="delete-download-link">{% trans 'Delete' %}</button>
                     <form onkeypress="return event.keyCode != 13;" id="send-download-link-form" action="" class="hide">
                         <label for="email">{% trans "Send to:"%}</label>
@@ -524,7 +524,7 @@
                 </form>
                 <div id="upload-link-operations" class="hide">
                     <p><span class="vam">{% trans 'Upload Link: ' %}</span><span id="upload-link"></span><!--input type="text" readonly="readonly" id="shared-link-text" class="vam" /--></p>
-                    <button id="send-upload-link">{% trans 'Send' %}</button>
+                    <button id="send-upload-link">Link an E-Mail-Adresse senden</button>
                     <button id="delete-upload-link">{% trans 'Delete' %}</button>
                     <form onkeypress="return event.keyCode != 13;" id="send-upload-link-form" action="" class="hide">
                         <label for="u-email">{% trans "Send to:"%}</label>
@@ -550,6 +550,7 @@
                     <% } else { %>
             <div id="dir-user-share" class="tabs-panel">
                     <% } %>
+                <p class="tip">Hier können Sie Bibliotheken und Ordner mit Personen teilen, die bei Seafile registriert sind. Benutzen Sie die Option “Download-Link erstellen”, um Elemente für nicht-registrierte Nutzer freizugeben.</p>
                 <table>
                     <thead>
                     <tr>
@@ -577,6 +578,7 @@
             </div>
 
             <div id="dir-group-share" class="tabs-panel hide">
+                <p class="tip">Hier können Sie Bibliotheken und Ordner für Seafile-Gruppen freigeben. So können alle Gruppenmitglieder gemeinsam an Dateien und Bibliotheken arbeiten.</p>
                 <table>
                     <thead>
                     <tr>
@@ -644,14 +646,14 @@
         <li class="tab" id="group-nav">
             <a href="#"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<span aria-hidden="true" class="toggle-icon icon-caret-down fright"></span></a>
             <ul class="grp-list">
-                <li<% if (cur_group_tab == 'groups') { %> class="tab-cur"<% }%>><a href="{% url 'group_list' %}"><span class="sharp" aria-hidden="true">#</span>{% trans "All Groups" %}</a></li>
+                <li style="margin-left: -20px"<% if (cur_group_tab == 'groups') { %> class="tab-cur"<% }%>><a href="{% url 'group_list' %}"><span class="sf2-icon-allgroups" aria-hidden="true"></span>{% trans "All Groups" %}</a></li>
                 <% for (var i = 0, len = groups.length; i < len; i++) { %>
                     <% if (cur_group_id == groups[i].id) { %>
                     <li class="tab-cur">
                     <% } else { %>
                     <li>
                     <% } %>
-                <a class="ellipsis" href="{{SITE_ROOT}}#group/<%= groups[i].id %>/" title="<%- groups[i].name %>"><span class="sharp" aria-hidden="true">#</span><%- groups[i].name %></a>
+                <a class="ellipsis" href="{{SITE_ROOT}}#group/<%= groups[i].id %>/" title="<%- groups[i].name %>"><span class="sf2-icon-group" aria-hidden="true"></span><%- groups[i].name %></a>
                 </li>
                 <% } %>
             </ul>
@@ -665,12 +667,12 @@
             <a href="#"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<span class="toggle-icon icon-caret-left fright"></span></a>
             <ul class="grp-list hide">
             <% } %>
-                <li>
-                    <a href="{% url 'group_list' %}"><span class="sharp" aria-hidden="true">#</span>{% trans "All Groups" %}</a>
+                <li style="margin-left:-20px;">
+                    <a href="{% url 'group_list' %}"><span class="sf2-icon-allgroups" aria-hidden="true"></span>{% trans "All Groups" %}</a>
                 </li>
                 <% for (var i = 0, len = groups.length; i < len; i++) { %>
                 <li>
-                    <a class="ellipsis" href="{{SITE_ROOT}}#group/<%= groups[i].id %>/" title="<%- groups[i].name %>"><span class="sharp" aria-hidden="true">#</span><%- groups[i].name %></a>
+                    <a class="ellipsis" href="{{SITE_ROOT}}#group/<%= groups[i].id %>/" title="<%- groups[i].name %>"><span class="sf2-icon-group" aria-hidden="true"></span><%- groups[i].name %></a>
                 </li>
                 <% } %>
             </ul>
