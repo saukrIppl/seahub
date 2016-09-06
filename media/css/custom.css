@@ -1,93 +1,99 @@
 #del-account,dis#left-panel > div > ul > li:nth-child(4) {
-  display: none;
+	display: none;
 }
 
 .left-right-tabs-nav .ui-state-active a,.left-right-tabs-nav .ui-state-active a:hover {
-  background: #56BDC3;
+	background: #00838F;
 }
 
 .side-tabnav-tabs .tab-cur a,.side-tabnav-tabs .tab-cur a:hover {
-  background-color: #56BDC3;
+	background-color: #00838F;
 }
 
 #notifications .num {
-  background: #56BDC3;
+	background: #00838F;
 }
 
 #notice-popover li.unread {
-  border-left: 2px solid #56BDC3;
+	border-left: 2px solid #00838F;
 }
 
 #guide-for-new .icon-lightbulb {
-  color: #56BDC3;
+	color: #00838F;
 }
 
 a {
-  color: #56BDC3;
+	color: #00838F;
 }
 
 a:focus, a:hover {
-    color: #56BDC3;
-    text-decoration: underline;
+	color: #0F848F;
+	text-decoration: none;
 }
 
 .tab-popup-tabs-nav .ui-state-active .a,.tab-popup-tabs-nav .tab .a:hover {
-  color: #56BDC3;
-  border-bottom-color: #56BDC3;
+	color: #00838F;
+	border-bottom-color: #00838F;
 }
 
 .load-more-discussion {
-  color: #56BDC3;
+	color: #00838F;
 }
 
 .tabnav-tab-cur a,.tabnav-tab a:hover,.wiki-nav .cur-item .link,.wiki-nav .link:hover,#right-panel .hd .ui-state-active .a,#right-panel .hd .a:hover {
-  color: #56BDC3;
-  border-bottom-color: #56BDC3;
+	color: #00838F;
+	border-bottom-color: #00838F;
 }
 
 #plans th {
-  color: #56BDC3;
+	color: #00838F;
 }
 
 .repo-op .op-link:hover {
-  color: #56BDC3;
+	color: #00838F;
 }
 
 .new-narrow-panel .hd {
-  background: #56BDC3;
+	background: #00838F;
 }
 
 .side-tabnav h3.hd, .side-tabnav .hd h3 {
-  color: #56BDC3;
+	color: #00838F;
 }
 
 .dropdown-menu a:hover {
-    background: #56BDC3;
+	background: #00838F;
 }
 
 .op-target {
-    color: #56BDC3;
+	color: #00838F;
 }
 
 .op-icon.sf2-x, .op-icon.sf2-x:hover {
-    color: #56BDC3;
+	color: #00838F;
 }
 
 .side-tabnav-tabs .tab a:hover {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
 
 li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
-    background: #56BDC3;
+	background: #00838F;
 }
 
 
 #notifications .num {
-    background: #CC0000;
-    border: 1px solid #CC0000;
+	background: #CC0000;
+	border: 1px solid #CC0000;
+	animation: pulsate 1s ease-out;
+	animation-iteration-count: infinite;
 }
 
-
+@-webkit-keyframes pulsate {
+	0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+	50% {opacity: 1.0;}
+	100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
 
 
 
@@ -104,6 +110,19 @@ span.dirent-name a.normal {
 	display: block;
 }
 
+#hideshow {
+  cursor: pointer;
+}
+
+#hideshow:hover {
+  text-decoration: none;
+  color: #469a9e;
+}
+
+#create-link {
+  margin-top: 8px;
+}
+
 /*Grüner Toast*/
 .messages .success {
 	padding: 15px 50px;
@@ -112,21 +131,15 @@ span.dirent-name a.normal {
 /*Erläuterung im Freigabe-Menü*/
 #share-popup .tip {
 	max-width: initial;
+	margin-top: 0;
 }
-
-/*Schließen-Button bei Bildern*/
-/*.mfp-close {
-	cursor: -moz-default;
-    cursor: -webkit-default;
-    cursor: default;
-}*/
 
 #share-popup .tabs-panel, #folder-perm-tabs .tabs-panel, #repo-shared-links .tabs-panel, #repo-folder-perm .tabs-panel {
 	max-height: initial;
 }
 
 .simplemodal-container {
-  height: 400px;
+	height: 400px;
 }
 
 .narrow-main-panel {
@@ -143,8 +156,13 @@ span.dirent-name a.normal {
 	vertical-align: middle;
 	border-radius: 13px;
 	padding: 0;
-    top: -15px;
-    left: 12px;
+	top: -9px;
+	left: 17px;
+}
+
+#notifications .num {
+	background: #FF3D00;
+	border-color: #FF3D00;
 }
 
 #repo-name {
@@ -152,24 +170,512 @@ span.dirent-name a.normal {
 	padding: 3px 3px;
 }
 
+#create-rep {
+	margin-top: 16px;
+}
+
 .current-version {
 	font-size: 12px;
 	display: inline;
 	padding: 3px;
 	border-radius: 2px;
-	background: #56BDC3;
+	background: #00838F;
 	color: white;
 }
 
-#hideshow {
-  cursor: pointer;
+
+
+
+
+
+
+
+/*_________________________________________________________________________________________________________*/
+
+body, input, textarea, button, select, h1, h2, h3, td, .btn-white, .tabnav button, .wiki-top .op-btn, button {
+	font-family: 'helvetica neue', 'Segoe UI', -apple-system, BlinkMacSystemFont, arial, 'Segoe UI', sans-serif;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	font-weight: 400;
 }
 
-#hideshow:hover {
-  text-decoration: none;
-  color: #469a9e;
+body, input, textarea, button, select, h1, h2, h3, td, .side-tabnav h3.hd, .side-tabnav .hd h3, .grid-item .text-link:hover, .left-right-tabs-nav a {
+	color: #37474F;
 }
 
-#create-link {
-  margin-top: 8px;
+#main, #footer {
+	width: 100%;
+	min-width: 1024px;
+	box-sizing: border-box;
+}
+
+#left-panel {
+	box-sizing: border-box;
+	width: 25%;
+	padding: 40px;
+	background: #F5F7F9;
+	min-height: 100vh;
+	border-right: 1px solid #EEEEEE;
+}
+
+#right-panel {
+	box-sizing: border-box;
+	width: 75%;
+	padding: 40px;
+}
+
+a {
+	font-weight: 500;
+	text-decoration:none;
+}
+
+/*Dark green text*/
+a, .side-tabnav-tabs .tab a:hover, .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab [class^="sf2-icon-"]:hover, .dropdown-menu a:hover, .left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .op-target, .op-icon.sf2-x, .op-icon.sf2-x:hover, .grid-item .text-link.hl, .current-version {
+	color: #00838F;
+}
+
+/*Light green Background*/
+.side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab a:hover, .dropdown-menu a:hover, .current-version {
+	background: #B2EBF2;
+}
+
+.left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .left-right-tabs-nav a:hover, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .tab-cur [class^="sf2-icon-"]:hover, li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
+	color: white !important;
+	background: #13a3b1;
+}
+
+.tab:hover a, .tab:hover [class^="sf2-icon-"] {
+	color: rgba(70, 153, 158, 1);
+}
+
+.side-tabnav-tabs .tab a {
+	font-size: 14px;
+}
+
+.tab [class^="sf2-icon-"] {
+	color: #81939e !important;
+}
+
+#header {
+	box-shadow: 0 2px 4px rgba(70, 90, 99, 0.2), 0 1px 0px rgba(70, 90, 99, 0.2);
+	background: #263238;
+	padding-top: 12px;
+	margin-bottom: 0px;
+	min-width: 1024px;
+	z-index: 0;
+	position: relative;
+}
+
+#header-inner {
+	width: calc(100% - 64px);
+	height: 48px;
+	margin: 0 32px;
+}
+
+form#top-search-form.search-form.fleft {
+	margin-right: 30px;
+}
+
+#top-search-form .search-input {
+	width: 510px;
+}
+
+a, button {
+	font-weight: 500;
+}
+
+input, button, input[type=submit], input[type=button], input.submit, .btn-link, .fileinput-button, select, .side-tabnav-tabs .tab, #right-panel .hd, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab a:hover, .messages .success {
+	border-radius: 4px;
+}
+
+
+
+li.tab-cur {
+	background: none;
+}
+
+li.tab-cur:hover a {
+	color: white;
+}
+
+#right-panel .hd, .tabnav, .repo-file-list-topbar, .commit-list-topbar, .file-audit-list-topbar, .wiki-top, #dir-view .repo-op {
+	border-radius: 4px;
+	margin-bottom: 0;
+}
+
+#dir-view .repo-op {
+	border-bottom: 0;
+}
+
+
+#notifications .sf2-icon-bell {
+	color: #92c0c2;
+}
+
+button {
+	padding: 5px 10px;
+}
+
+thead td, thead th {
+	padding: 14px 3px;
+}
+
+
+
+#left-panel h3, div.hd.w100.ovhd h3.fleft {
+	font-size:14px;
+	font-weight: 600;
+}
+
+.op-icon.sf2-x:hover, .op-icon.sf2-x:focus {
+	text-decoration: none;
+}
+
+#top-search-form .search-input {
+	padding: 1px 30px 1px 10px;
+	height: 36px;
+	background: rgba(0, 0, 0, 0.22);
+	border: 0;
+	color: white;
+}
+
+#top-search-form {
+	margin-top: 0;
+}
+
+.search-form .search-submit {
+	width: 36px;
+	height: 36px;
+	background: rgb(58, 72, 80);
+	color: white;
+}
+
+#js-switch-list-view {
+	border-radius: 4px 0px 0px 4px;
+	border-right: 0px;
+}
+
+#js-switch-grid-view {
+	border-radius: 0px 4px 4px 0px;
+	border-left: 0px;
+}
+
+.grid-view-icon-btn.active, .list-view-icon-btn.active {
+	background: #00838F;
+	border-color: #00838F;
+}
+
+
+
+#notifications {
+	margin: 4px 0 0 17px;
+}
+
+#notifications .sf2-icon-bell {
+	font-size: 36px;
+}
+
+
+.btn-white, .tabnav button, .repo-file-list-topbar .op-btn, .wiki-top .op-bt n{
+	background: linear-gradient( #fff, #eee);
+	font-weight: 500;
+	margin-right: 4px;
+	height: 30px;
+}
+
+input[type=submit], input.submit, button.submit, #send-download-link, #send-upload-link {
+	background: linear-gradient( #129fad, #0F848F);
+	border-color: #0F848F;
+	color: white
+}
+
+input[type=submit]:hover, input.submit:hover, button.submit:hover, #send-download-link, #send-upload-link {
+	opacity: .9;
+	background: linear-gradient( #129fad, #0F848F);
+	border-color: #0F848F;
+	color: white
+}
+
+.web-setting-form .submit, .inline-rename-form .submit {
+	color: white;
+}
+
+#footer {
+	margin-top: 0;
+	padding: 40px;
+	background: #0F848F;
+	margin: initial;
+}
+
+#footer h4 {
+	font-weight: 500;
+	font-size: 16px;
+	color: white;
+}
+
+#footer a, #footer p {
+	font-weight: 400;
+	font-size: 12px;
+	color: white;
+}
+
+.empty-tips {
+	color: #8a6d3b;
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+	box-shadow: none;
+}
+
+.empty-tips p, .empty-tips h2 {
+	color: #8a6d3b;
+}
+
+#simplemodal-container {
+	animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s; /* Firefox */
+	-webkit-animation: fadein 0.5s; /* Safari and Chrome */
+	-o-animation: fadein 0.5s; /* Opera */
+}
+
+
+
+@keyframes fadein {
+	from {
+		opacity:0;
+		transform: translateY(-200px);
+		transform: ;
+
+	}
+	to {
+		opacity:1;
+		transform: translateY(0px);
+	}
+}
+
+.mfp-zoom-out-cur {
+	animation: grow .75s;
+	-moz-animation: grow .75s; /* Firefox */
+	-webkit-animation: grow .75s; /* Safari and Chrome */
+	-o-animation: grow .75s; /* Opera */
+	box-shadow: 0 2px 4px rgba(70, 90, 99, 0.075), 0 1px 0px rgba(70, 90, 99, 0.075);
+
+}
+
+@keyframes grow {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
+}
+
+.popover, .messages .success {
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  animation: flipInX 0.2s;
+	-moz-animation: flipInX 0.2s; /* Firefox */
+	-webkit-animation: flipInX 0.2s; /* Safari and Chrome */
+	-o-animation: flipInX 0.2s; /* Opera */
+
+}
+
+@keyframes flipInX {
+  from {
+    -webkit-transform: rotate3d(1, 0, 0, 90deg);
+    transform: rotate3d(1, 0, 0, 90deg);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+
+  to {
+    z-index: 5000;
+  }
+}
+
+
+#simplemodal-container .left-right-tabs-nav .ui-state-active a {
+	font-weight: 500;
+}
+
+.left-right-tabs-nav a {
+	padding: 7px 14px;
+}
+
+h3#dialogTitle.hd {
+	margin: -20px;
+	padding: 20px;
+	background: #F5F7F9;
+	margin-bottom: 20px;
+	border-radius: 4px 4px 0px 0px;
+	border-bottom: 1px solid #EEEEEE;
+
+}
+
+.side-tabnav-tabs .tab a {
+	line-height: 48px;
+	height: 48px
+}
+
+.side-tabnav-tabs .tab a {
+	padding: 0;
+
+}
+
+.side-tabnav-tabs .tab .grp-list a {
+	line-height: 32px;
+	height: 32px;
+}
+
+
+img.thumbnail {
+	max-width: 32px;
+	max-height: 32px;
+	border-radius: 3px;
+}
+
+#account .manage {
+    position: absolute;
+    left: 33px;
+    top: -12px;
+}
+
+
+
+#main-panel {
+margin-top: 40px;
+padding: 0 40px;
+box-sizing: border-box;
+}
+
+#repo-create-form .checkbox-label {
+	margin: 7px 0;
+}
+
+#right-panel h3:first-child {
+	margin-bottom: 4px;
+}
+
+#right-panel .hd, .tabnav, .wiki-top {
+	height: 48px;
+box-sizing: border-box;
+}
+
+table {
+	margin-top: 0;
+}
+tr {
+	height: 48px;
+	vertical-align: middle;
+	box-sizing: border-box;
+}
+
+td, th {
+    padding: 12px 3px;
+}
+
+
+td.dirent-icon {
+	padding: 0;
+}
+.repo-file-list th {
+	padding-top: 14px;
+}
+
+.repo-file-list .dirent-name {
+	width: 100%;
+}
+
+.repo-name-span a {
+	display: block;
+}
+
+@media (min-width: 1680px) {
+	#left-panel {
+		width: 20%;
+	}
+
+	#right-panel {
+		width: 80%;
+	}
+}
+
+
+.sf2-icon-allgroups:before {
+	content: "\e026";
+}
+
+
+.grp-list .sf2-icon-allgroups, .grp-list .sf2-icon-group {
+	font-size: 14px !important;
+}
+
+ul.grp-list {
+	margin-left: 40px
+}
+
+thead.vh {
+	display: none;
+}
+
+#groups .empty-tip {
+	padding: 14px 0;
+}
+
+@media (max-width: 1024px) {
+	#left-panel {
+		display: none;
+	}
+
+	#right-panel, #header {
+		width: 100%;
+		
+	}
+
+	#right-panel {
+		padding: 2.5%;
+		padding-top: 5%;
+		min-height: 90vh;
+	}
+
+	#main, #footer, #header {
+		min-width: 320px;
+	}
+
+	#header-inner {
+		padding: 0 2.5%;
+		width: initial;
+		margin: initial;
+	}
+
+	.my-own-repos-table td:nth-of-type(4), .my-own-repos-table td:nth-of-type(5), .my-own-repos-table th:nth-of-type(4), .my-own-repos-table th:nth-of-type(5) {
+		display: none;
+	}
+
+	.repo-file-list td:nth-of-type(2),.repo-file-list td:nth-of-type(6), .repo-file-list td:nth-of-type(7), .repo-file-list th:nth-of-type(2), .repo-file-list th:nth-of-type(6), .repo-file-list th:nth-of-type(7) {
+		display: none;
+	}
+
+	table .vh {
+		visibility: visible !important;
+	}
+
+	td.repo-op-td {
+		text-align: right;
+	}
+
+	#logo:before {
+		content: "\e026";
+		font-family: 'seafile-font2';
+		speak: none;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		-webkit-font-smoothing: antialiased;
+		color: white;
+		font-size: 25px;
+	}
+
 }
