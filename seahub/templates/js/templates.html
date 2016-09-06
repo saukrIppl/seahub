@@ -478,7 +478,7 @@
                         <% } %>
                     </dl>
                     <button id="send-download-link">Link an E-Mail-Adresse senden</button>
-                    <button id="delete-download-link">{% trans 'Delete' %}</button>
+                    <button id="delete-download-link">Link löschen</button>
                     <form onkeypress="return event.keyCode != 13;" id="send-download-link-form" action="" class="hide">
                         <label for="email">{% trans "Send to:"%}</label>
                         <span class="tip">
@@ -525,7 +525,7 @@
                 <div id="upload-link-operations" class="hide">
                     <p><span class="vam">{% trans 'Upload Link: ' %}</span><span id="upload-link"></span><!--input type="text" readonly="readonly" id="shared-link-text" class="vam" /--></p>
                     <button id="send-upload-link">Link an E-Mail-Adresse senden</button>
-                    <button id="delete-upload-link">{% trans 'Delete' %}</button>
+                    <button id="delete-upload-link">Link löschen</button>
                     <form onkeypress="return event.keyCode != 13;" id="send-upload-link-form" action="" class="hide">
                         <label for="u-email">{% trans "Send to:"%}</label>
                         <span class="tip">
@@ -550,7 +550,7 @@
                     <% } else { %>
             <div id="dir-user-share" class="tabs-panel">
                     <% } %>
-                <p class="tip">Hier können Sie Bibliotheken und Ordner mit Personen teilen, die bei Seafile registriert sind. Benutzen Sie die Option “Download-Link erstellen”, um Elemente für nicht-registrierte Nutzer freizugeben.</p>
+                <p class="tip">Hier können Sie Bibliotheken und Ordner mit Personen teilen, die <strong>bei Seafile registriert</strong> sind.</p>
                 <table>
                     <thead>
                     <tr>

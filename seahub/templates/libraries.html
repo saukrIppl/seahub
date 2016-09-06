@@ -65,10 +65,10 @@
 </script>
 
 <script type="text/template" id="groups-tmpl">
+    <h3>{% trans "My Groups" %}</h3>
     <div class="hd ovhd">
-        <h3 class="fleft">{% trans "My Groups" %}</h3>
         {% if user.permissions.can_add_group %}
-        <button id="add-group" class="btn-white fright"><span aria-hidden="true" class="icon-plus-square add vam"></span><span class="vam">{% trans "New Group" %}</span></button>
+        <button id="add-group" class="btn-white"><span aria-hidden="true" class="icon-plus-square add vam"></span><span class="vam">{% trans "New Group" %}</span></button>
         {% endif %}
     </div>
 

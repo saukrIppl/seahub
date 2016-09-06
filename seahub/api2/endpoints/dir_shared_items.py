@@ -278,7 +278,7 @@ class DirSharedItemsEndpoint(APIView):
                 if not is_valid_username(to_user):
                     result['failed'].append({
                         'email': to_user,
-                        'error_msg': 'username invalid.'
+                        'error_msg': 'Nutzername oder E-Mail-Adresse ung&uuml;ltig.'
                         })
                     continue
 
@@ -287,7 +287,7 @@ class DirSharedItemsEndpoint(APIView):
                 except User.DoesNotExist:
                     result['failed'].append({
                         'email': to_user,
-                        'error_msg': 'User %s not found.' % to_user
+                        'error_msg': 'Es wurde kein Nutzer mit der E-Mail-Adresse %s gefunden. Benutzen Sie die Option &bdquo;Download-Link erstellen&rdquo; bzw. &bdquo;Upload-Link erstellen&rdquo;, um Elemente f&uuml;r nicht-registrierte Nutzer freizugeben.' % to_user
                         })
                     continue
 
