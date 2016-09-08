@@ -9451,7 +9451,7 @@ function() {
                 })), this
             },
             events: {
-                'click #hideshow': "showExtendedFunctions",
+                'click .extended-options-btn': "showExtendedFunctions",
                 'click [type="checkbox"]': "clickCheckbox",
                 "submit #generate-download-link-form": "generateDownloadLink",
                 "click #send-download-link": "showDownloadLinkSendForm",
@@ -9474,8 +9474,8 @@ function() {
                 "click #add-dir-user-share-item .submit": "dirUserShare",
                 "click #add-dir-group-share-item .submit": "dirGroupShare"
             },
-            showExtendedFunctions: function() {
-                e("#extended-options").toggleClass("hide")
+            showExtendedFunctions: function(f) {
+                e(".extended-options", f.currentTarget.parent).toggleClass("hide")
             },
             clickCheckbox: function(t) {
                 var n = e(t.currentTarget);
@@ -18202,7 +18202,7 @@ function() {
                     i = "orientationchange." + t;
                 this.container.parents().add(window).each(function() {
                     e(this).off(n).off(r).off(i)
-                }), this.clearDropdownAlignmentPreference(), e("#select2-drop-mask").hide(), this.dropdown.removeAttr("id"), this.dropdown.hide(), this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active"), this.results.empty(), a.off("mousemove.select2Event"), this.clearSearch(), this.search.removeClass("select2-active"), this.opts.element.trigger(e.Event("select2-close"))
+                }), this.clearDropdownAlignmentPreference(), e("#select2-drop-mask").hide(), this.dropdown.removeAttr("id"), this.dropdown.hide(), this.container.removeClass("select2-dropdown-open").removeClass("select2-container-active"), this.results.empty(), a.off("mousemove.select2Event"), this.clearSearch("close", true), this.search.removeClass("select2-active"), this.opts.element.trigger(e.Event("select2-close"))
             },
             externalSearch: function(e) {
                 this.open(), this.search.val(e), this.updateResults(!1)
@@ -18374,12 +18374,12 @@ function() {
             blur: function() {
                 this.opts.selectOnBlur && this.selectHighlighted({
                     noFocus: !0
-                }), this.close(), this.container.removeClass("select2-container-active"), this.search[0] === document.activeElement && this.search.blur(), this.clearSearch(), this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus")
+                }), this.close(), this.container.removeClass("select2-container-active"), this.search[0] === document.activeElement && this.search.blur(), this.clearSearch("blurFunct"), this.selection.find(".select2-search-choice-focus").removeClass("select2-search-choice-focus")
             },
             focusSearch: function() {
                 T(this.search)
             },
-            selectHighlighted: function(e) {
+            selectHighlighted: function(e, searchVal) {
                 if (this._touchMoved) {
                     this.clearTouchMoved();
                     return
@@ -18387,6 +18387,7 @@ function() {
                 var t = this.highlight(),
                     n = this.results.find(".select2-highlighted"),
                     r = n.closest(".select2-result").data("select2-data");
+                    r = (searchVal) ? searchVal : r;
                 r ? (this.highlight(t), this.onSelect(r, e)) : e && e.noFocus && this.close()
             },
             getPlaceholder: function() {
@@ -18770,7 +18771,7 @@ function() {
                 })), this.search.on("keyup", this.bind(function(e) {
                     this.keydowns = 0, this.resizeSearch()
                 })), this.search.on("blur", this.bind(function(t) {
-                    this.container.removeClass("select2-container-active"), this.search.removeClass("select2-focused"), this.selectChoice(null), this.opened() || this.clearSearch(), t.stopImmediatePropagation(), this.opts.element.trigger(e.Event("select2-blur"))
+                    this.container.removeClass("select2-container-active"), this.search.removeClass("select2-focused"), this.selectChoice(null), this.opened() || this.clearSearch("blur", true), t.stopImmediatePropagation(), this.opts.element.trigger(e.Event("select2-blur"))
                 })), this.container.on("click", t, this.bind(function(t) {
                     if (!this.isInterfaceEnabled()) return;
                     if (e(t.target).closest(".select2-search-choice").length > 0) return;
@@ -18778,24 +18779,30 @@ function() {
                 })), this.container.on("focus", t, this.bind(function() {
                     if (!this.isInterfaceEnabled()) return;
                     this.container.hasClass("select2-container-active") || this.opts.element.trigger(e.Event("select2-focus")), this.container.addClass("select2-container-active"), this.dropdown.addClass("select2-drop-active"), this.clearPlaceholder()
-                })), this.initContainerWidth(), this.opts.element.hide(), this.clearSearch(), console.log(this)
+                })), this.initContainerWidth(), this.opts.element.hide(), this.clearSearch("init")
             },
             enableInterface: function() {
                 this.parent.enableInterface.apply(this, arguments) && this.search.prop("disabled", !this.isInterfaceEnabled())
             },
             initSelection: function() {
                 var e;
-                this.opts.element.val() === "" && this.opts.element.text() === "" && (this.updateSelection([]), this.close(), this.clearSearch());
+                this.opts.element.val() === "" && this.opts.element.text() === "" && (this.updateSelection([]), this.close(), this.clearSearch("initSel"));
                 if (this.select || this.opts.element.val() !== "") {
                     var n = this;
                     this.opts.initSelection.call(null, this.opts.element, function(e) {
-                        e !== t && e !== null && (n.updateSelection(e), n.close(), n.clearSearch())
+                        e !== t && e !== null && (n.updateSelection(e), n.close(), n.clearSearch("initSel2"))
                     })
                 }
             },
-            clearSearch: function() {
+            clearSearch: function(hint, useVal) {
+                if (useVal && this.search.val().length > 0) {
+                    this.selectHighlighted(null, { id: this.search.val() });
+                    return;
+                }
+                
                 var e = this.getPlaceholder(),
                     n = this.getMaxSearchWidth();
+
                 e !== t && this.getVal().length === 0 && this.search.hasClass("select2-focused") === !1 ? (this.search.val(e).addClass("select2-default"), this.search.width(n > 0 ? n : this.container.css("width"))) : this.search.val("").width(10)
             },
             clearPlaceholder: function() {
@@ -18834,7 +18841,7 @@ function() {
                     type: "selected",
                     val: this.id(e),
                     choice: e
-                }), this.nextSearchTerm = this.opts.nextSearchTerm(e, this.search.val()), this.clearSearch(), this.updateResults(), (this.select || !this.opts.closeOnSelect) && this.postprocessResults(e, !1, this.opts.closeOnSelect === !0), this.opts.closeOnSelect ? (this.close(), this.search.width(10)) : this.countSelectableResults() > 0 ? (this.search.width(10), this.resizeSearch(), this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize() ? this.updateResults(!0) : this.nextSearchTerm != t && (this.search.val(this.nextSearchTerm), this.updateResults(), this.search.select()), this.positionDropdown()) : (this.close(), this.search.width(10)), this.triggerChange({
+                }), this.nextSearchTerm = this.opts.nextSearchTerm(e, this.search.val()), this.clearSearch("onSel"), this.updateResults(), (this.select || !this.opts.closeOnSelect) && this.postprocessResults(e, !1, this.opts.closeOnSelect === !0), this.opts.closeOnSelect ? (this.close(), this.search.width(10)) : this.countSelectableResults() > 0 ? (this.search.width(10), this.resizeSearch(), this.getMaximumSelectionSize() > 0 && this.val().length >= this.getMaximumSelectionSize() ? this.updateResults(!0) : this.nextSearchTerm != t && (this.search.val(this.nextSearchTerm), this.updateResults(), this.search.select()), this.positionDropdown()) : (this.close(), this.search.width(10)), this.triggerChange({
                     added: e
                 }), (!n || !n.noFocus) && this.focusSearch()
             },
@@ -18920,7 +18927,7 @@ function() {
                 if (arguments.length === 0) return this.getVal();
                 i = this.data(), i.length || (i = []);
                 if (!n && n !== 0) {
-                    this.opts.element.val(""), this.updateSelection([]), this.clearSearch(), r && this.triggerChange({
+                    this.opts.element.val(""), this.updateSelection([]), this.clearSearch("val"), r && this.triggerChange({
                         added: this.data(),
                         removed: i
                     });
@@ -18932,10 +18939,10 @@ function() {
                     if (this.opts.initSelection === t) throw new Error("val() cannot be called if initSelection() is not defined");
                     this.opts.initSelection(this.opts.element, function(t) {
                         var n = e.map(t, s.id);
-                        s.setVal(n), s.updateSelection(t), s.clearSearch(), r && s.triggerChange(s.buildChangeDetails(i, s.data()))
+                        s.setVal(n), s.updateSelection(t), s.clearSearch("val2"), r && s.triggerChange(s.buildChangeDetails(i, s.data()))
                     })
                 }
-                this.clearSearch()
+                this.clearSearch("val3")
             },
             onSortStart: function() {
                 if (this.select) throw new Error("Sorting of elements is not supported when attached to <select>. Attach to <input type='hidden'/> instead.");
@@ -18956,7 +18963,7 @@ function() {
                 }).get();
                 s = this.data(), t || (t = []), i = e.map(t, function(e) {
                     return r.opts.id(e)
-                }), this.setVal(i), this.updateSelection(t), this.clearSearch(), n && this.triggerChange(this.buildChangeDetails(s, this.data()))
+                }), this.setVal(i), this.updateSelection(t), this.clearSearch("data"), n && this.triggerChange(this.buildChangeDetails(s, this.data()))
             }
         }), e.fn.select2 = function() {
             var n = Array.prototype.slice.call(arguments, 0),

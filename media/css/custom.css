@@ -110,11 +110,11 @@ span.dirent-name a.normal {
 	display: block;
 }
 
-#hideshow {
+.extended-options-btn{
   cursor: pointer;
 }
 
-#hideshow:hover {
+.extended-options-btn:hover {
   text-decoration: none;
   color: #469a9e;
 }
@@ -624,6 +624,10 @@ thead.vh {
 	padding: 14px 0;
 }
 
+.btn-white * {
+  vertical-align: initial !important;
+}
+
 @media (max-width: 1024px) {
 	#left-panel {
 		display: none;
@@ -678,4 +682,6 @@ thead.vh {
 		font-size: 25px;
 	}
 
+
 }
+  

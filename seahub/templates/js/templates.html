@@ -438,10 +438,10 @@
             <% if (!repo_encrypted) { %>
             <div id="download-link-share" class="tabs-panel">
                 <p class="tip">{% trans "You can generate a download link for a folder or a file. People receive this link can view the folder or the file online." %}</p>
-                <a id="hideshow">Erweiterte Optionen <span id="no-underline" class="icon-caret-down vam"></span></a>
+                <a class="extended-options-btn">Erweiterte Optionen <span id="no-underline" class="icon-caret-down vam"></span></a>
 
                 <form id="generate-download-link-form" action="" class="hide">
-                    <div id="extended-options" class="hide">
+                    <div class="extended-options hide">
                         <label class="checkbox-label">
                             <input type="checkbox" name="use_passwd" class="vam" />
                             <span class="checkbox-option vam">{% trans "Add password protection"%}</span>
@@ -501,9 +501,9 @@
                 <% if (user_perm == 'rw' && !repo_encrypted) { %>
             <div id="dir-upload-link-share" class="tabs-panel hide">
                 <p class="tip">{% trans "You can share the generated link to others and then they can upload files to this directory via the link." %}</p>
-                <a id="hideshow">Erweiterte Optionen <span id="no-underline" class="icon-caret-down vam"></span></a>
+                <a class="extended-options-btn">Erweiterte Optionen <span id="no-underline" class="icon-caret-down vam"></span></a>
                 <form id="generate-upload-link-form" action="" class="hide">
-                    <div id="extended-options" class="hide">
+                    <div class="extended-options hide">
                         <label class="checkbox-label">
                             <input type="checkbox" name="use_passwd" class="vam" />
                             <span class="checkbox-option vam">{% trans "Add password protection"%}</span>
