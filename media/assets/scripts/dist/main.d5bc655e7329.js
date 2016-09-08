@@ -9215,13 +9215,15 @@ function() {
                 return this.$el.html(this.template(this.data)), this
             },
             events: {
-                "click #group-nav a:first": "toggleGroupList",
+                "click #group-toggle-btn": "toggleGroupList",
+                "click #group-nav a:first": "doNothing",
                 "click #enable-mods": "enableMods"
             },
             toggleGroupList: function() {
                 var t = e("#group-nav .toggle-icon");
                 return t.toggleClass("icon-caret-left icon-caret-down"), e("#group-nav .grp-list").slideToggle(), t.hasClass("icon-caret-down") ? i.set("group_expanded", "true") : i.set("group_expanded", "false"), !1
             },
+            doNothing: function() { },
             enableMods: function() {
                 var t = app.pageOptions.user_mods_enabled,
                     n = e(this.enableModTemplate({
