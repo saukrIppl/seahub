@@ -1,7 +1,7 @@
 {% extends base_template %}
 {% load seahub_tags avatar_tags i18n %}
-{% load url from future %}
 
+{% load url from future %}
 {% block sub_title %}{{filename}} - {% endblock %}
 
 {% block extra_style %}
@@ -108,7 +108,7 @@
 // download
 $(function() {
     var dld_url = $('#download').attr('href');
-    $('#file-view-tip').append('<a href="' + dld_url + '" class="btn-link big-btn-link">' + "{% trans "Download" %}" + '</a>');
+    $('#file-view-tip').append('<img src="{{MEDIA_URL}}img/file/ppt-192.png"><br><a href="' + dld_url + '" class="btn-link big-btn-link">' + "{% trans "Download" %}" + '</a>');
 });
 
 // share link
