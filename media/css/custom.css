@@ -119,6 +119,23 @@ span.dirent-name a.normal {
   color: #469a9e;
 }
 
+#group-toggle-btn {
+	background: #f5f7f9;
+	border-radius: 15px;
+	margin-top: 8.5px;
+	margin-right: 14px;
+	padding: 4px 10px;
+}
+
+#group-toggle-btn.icon-caret-left {
+	padding: 4px 12px 4px 10.8px;
+	margin-left: -0.6px;
+}
+
+#group-toggle-btn:focus {
+	border-color: #c5c5c5;
+}
+
 #create-link {
   margin-top: 8px;
 }

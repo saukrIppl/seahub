@@ -644,9 +644,13 @@
 
         <% if (cur_tab == 'group') { %>
         <li class="tab" id="group-nav">
-            <a href="#"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<span aria-hidden="true" class="toggle-icon icon-caret-down fright"></span></a>
+            <% if (show_group_list) { %>
+            <a href="{% url 'group_list' %}"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<% if (groups.length > 0) { %><button id="group-toggle-btn" class="group-toggle-btn toggle-icon icon-caret-down fright"></button><% } %></a>
             <ul class="grp-list">
-                <li style="margin-left: -20px"<% if (cur_group_tab == 'groups') { %> class="tab-cur"<% }%>><a href="{% url 'group_list' %}"><span class="sf2-icon-allgroups" aria-hidden="true"></span>{% trans "All Groups" %}</a></li>
+            <% } else { %>
+            <a href="{% url 'group_list' %}"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<button id="group-toggle-btn" class="toggle-icon icon-caret-left fright"></button></a>
+            <ul class="grp-list hide">
+            <% } %>
                 <% for (var i = 0, len = groups.length; i < len; i++) { %>
                     <% if (cur_group_id == groups[i].id) { %>
                     <li class="tab-cur">
@@ -661,15 +665,12 @@
         <% } else { %>
         <li class="tab" id="group-nav">
             <% if (show_group_list) { %>
-            <a href="#"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<span class="toggle-icon icon-caret-down fright"></span></a>
+            <a href="{% url 'group_list' %}"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<% if (groups.length > 0) { %><button id="group-toggle-btn" class="group-toggle-btn toggle-icon icon-caret-down fright"></button><% } %></a>
             <ul class="grp-list">
             <% } else { %>
-            <a href="#"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<span class="toggle-icon icon-caret-left fright"></span></a>
+            <a href="{% url 'group_list' %}"><span aria-hidden="true" class="sf2-icon-group"></span>{% trans "Groups" %}<button id="group-toggle-btn" class="toggle-icon icon-caret-left fright"></button></a>
             <ul class="grp-list hide">
             <% } %>
-                <li style="margin-left:-20px;">
-                    <a href="{% url 'group_list' %}"><span class="sf2-icon-allgroups" aria-hidden="true"></span>{% trans "All Groups" %}</a>
-                </li>
                 <% for (var i = 0, len = groups.length; i < len; i++) { %>
                 <li>
                     <a class="ellipsis" href="{{SITE_ROOT}}#group/<%= groups[i].id %>/" title="<%- groups[i].name %>"><span class="sf2-icon-group" aria-hidden="true"></span><%- groups[i].name %></a>

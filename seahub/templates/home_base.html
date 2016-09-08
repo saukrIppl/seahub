@@ -20,11 +20,9 @@
         {% endif %}
 
         <li class="tab" id="group-nav">
-            <a href="#"><span class="sf2-icon-group"></span>{% trans "Groups" %}<span class="toggle-icon icon-caret-left fright"></span></a>
+            <a href="{% url 'group_list' %}"><span class="sf2-icon-group"></span>{% trans "Groups" %}<span class="toggle-icon icon-caret-left fright"></span></a>
             <ul class="grp-list hide">
-                <li style="margin-left:-20px;">
-                    <a href="{% url 'group_list' %}"><span class="sf2-icon-allgroups"></span>{% trans "All Groups" %}</a>
-                </li>
+                <div id="humdi dumpdi" />
                 {% for grp in grps %}
                 <li>
                     <a class="ellipsis" href="{{SITE_ROOT}}#group/{{ grp.id }}/" title="{{ grp.group_name }}"><span class="sf2-icon-group"></span>{{ grp.group_name }}</a>
