@@ -93,7 +93,7 @@
     "Please check the network.": "Bitte \u00fcberpr\u00fcfen Sie die Netzwerkverbindung.", 
     "Please choose a CSV file": "Bitte w\u00e4hlen Sie eine CSV-Datei", 
     "Please click and choose a directory.": "W\u00e4hlen Sie ein Verzeichnis und klicken es an", 
-    "Please enter 1 or more character": "Eingabe mit Enter best\u00e4tigen", 
+    "Please enter 1 or more character": "Name oder Emailadresse eingeben", 
     "Please enter a new password": "Bitte geben sie das neue Passwort ein", 
     "Please enter days.": "Bitte Tage eingeben", 
     "Please enter password": "Bitte geben Sie ein Passwort ein", 
