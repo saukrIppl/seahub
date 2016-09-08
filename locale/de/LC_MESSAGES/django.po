@@ -3852,7 +3852,7 @@ msgstr "Umbenennen"
 #: seahub/templates/sysadmin/repoadmin_table.html:36
 #: seahub/templates/sysadmin/userinfo.html:104
 msgid "Transfer"
-msgstr "Übertragen"
+msgstr "Besitzrechte übertragen"
 
 #: seahub/templates/js/templates.html:49
 msgid "History Setting"
@@ -3865,7 +3865,7 @@ msgstr "Passwort ändern"
 
 #: seahub/templates/js/templates.html:54
 msgid "Share Links"
-msgstr "Links freigeben"
+msgstr "Freigaben verwalten"
 
 #: seahub/templates/js/templates.html:57
 msgid "Folder Permission"
