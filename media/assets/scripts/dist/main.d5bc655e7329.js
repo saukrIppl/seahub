@@ -19709,6 +19709,9 @@ function() {
                     top: t.position().top + t.height() + 2,
                     width: 180
                 }), app.ui.freezeItemHightlight = !1;
+                s.click(function(e) {
+                    e.stopPropagation();
+                });
                 this.closeMenu();
                 var o = this;
                 return  e(".no", s).click(function() {
