@@ -46,7 +46,7 @@
                 {% endif %}
                 <td>
                     <a href="#" class="sf2-icon-link view-link op-icon vh" data-link="{{ fs.shared_link }}" title="{% trans "View"%}"></a>
-                    <a href="#" class="sf2-icon-delete rm-link op-icon vh" data-token="{{ fs.token }}" title="{% trans "Remove"%}"></a>
+                    <a href="#" class="sf2-icon-x1 rm-link op-icon vh" data-token="{{ fs.token }}" title="{% trans "Remove"%}"></a>
                 </td>
             </tr>
             {% endfor %}
@@ -77,7 +77,7 @@
                 <td>{{ link.view_cnt }}</td>
                 <td>
                     <a href="#" class="sf2-icon-link view-link op-icon vh" data-link="{{ link.shared_link }}" title="{% trans "View"%}"></a>
-                    <a href="#" class="sf2-icon-delete rm-upload-link op-icon vh" data-token="{{ link.token }}" title="{% trans "Remove"%}"></a>
+                    <a href="#" class="sf2-icon-x1 rm-upload-link op-icon vh" data-token="{{ link.token }}" title="{% trans "Remove"%}"></a>
                 </td>
             </tr>
             {% endfor %}
