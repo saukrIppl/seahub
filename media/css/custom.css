@@ -101,11 +101,6 @@ li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
 /*__________________________________________Eigene Anpassungen__________________________________________________*/
 
 
-
-
-
-
-
 span.dirent-name a.normal {
 	display: block;
 }
@@ -122,7 +117,7 @@ span.dirent-name a.normal {
 #group-toggle-btn {
 	background: #f5f7f9;
 	border-radius: 15px;
-	margin-top: 8.5px;
+	margin-top: 9px;
 	margin-right: 14px;
 	padding: 4px 10px;
 }
@@ -546,6 +541,16 @@ h3#dialogTitle.hd {
 	height: 32px;
 }
 
+#tab-cur-clear-fix {
+	background: initial;
+	color: #333 !important;
+	font-weight: normal;
+}
+
+#tab-cur-clear-fix span{
+	background: initial;
+	color: #81939e !important;
+}
 
 img.thumbnail {
 	max-width: 32px;
@@ -558,7 +563,6 @@ img.thumbnail {
     left: 33px;
     top: -12px;
 }
-
 
 
 #main-panel {
@@ -608,6 +612,8 @@ td.dirent-icon {
 .repo-name-span a {
 	display: block;
 }
+
+
 
 @media (min-width: 1680px) {
 	#left-panel {
@@ -699,6 +705,7 @@ thead.vh {
 		font-size: 25px;
 	}
 
-
 }
+
+
   
