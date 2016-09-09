@@ -3594,7 +3594,7 @@ msgstr "Neuer Ordner"
 #: seahub/templates/js/lib-op-popups.html:16
 #: seahub/templates/js/templates.html:133
 msgid "New File"
-msgstr "Neue Datei"
+msgstr "Neue Text-Datei"
 
 #: seahub/templates/js/lib-op-popups.html:18
 msgid "Featured File Type"
