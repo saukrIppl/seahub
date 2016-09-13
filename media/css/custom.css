@@ -85,8 +85,7 @@ li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
 #notifications .num {
 	background: #CC0000;
 	border: 1px solid #CC0000;
-	animation: pulsate 1s ease-out;
-	animation-iteration-count: infinite;
+	
 }
 
 @-webkit-keyframes pulsate {
@@ -101,99 +100,28 @@ li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
 /*__________________________________________Eigene Anpassungen__________________________________________________*/
 
 
-span.dirent-name a.normal {
-	display: block;
-}
 
-.extended-options-btn{
-  cursor: pointer;
-}
 
-.extended-options-btn:hover {
-  text-decoration: none;
-  color: #469a9e;
-}
 
-#group-toggle-btn {
-	background: #f5f7f9;
-	border-radius: 15px;
-	margin-top: 9px;
-	margin-right: 14px;
-	padding: 4px 10px;
-}
 
-#group-toggle-btn.icon-caret-left {
-	padding: 4px 12px 4px 10.8px;
-	margin-left: -0.6px;
-}
 
-#group-toggle-btn:focus {
-	border-color: #c5c5c5;
-}
 
-#create-link {
-  margin-top: 8px;
-}
 
-/*Grüner Toast*/
-.messages .success {
-	padding: 15px 50px;
-}
 
-/*Erläuterung im Freigabe-Menü*/
-#share-popup .tip {
-	max-width: initial;
-	margin-top: 0;
-}
 
-#share-popup .tabs-panel, #folder-perm-tabs .tabs-panel, #repo-shared-links .tabs-panel, #repo-folder-perm .tabs-panel {
-	max-height: initial;
-}
 
-.simplemodal-container {
-	height: 400px;
-}
 
-.narrow-main-panel {
-	width: 710px;
-	margin-right: auto;
-	margin-left: auto;
-}
 
-#notifications .num {
-	line-height: 25px;
-	height: 25px;
-	width: 25px;
-	text-align: center;
-	vertical-align: middle;
-	border-radius: 13px;
-	padding: 0;
-	top: -9px;
-	left: 17px;
-}
 
-#notifications .num {
-	background: #FF3D00;
-	border-color: #FF3D00;
-}
 
-#repo-name {
-	width: calc(100% - 6px);
-	padding: 3px 3px;
-}
 
-#create-rep {
-	margin-top: 16px;
-}
 
-.current-version {
-	font-size: 12px;
-	display: inline;
-	padding: 3px;
-	border-radius: 2px;
-	background: #00838F;
-	color: white;
-}
+
+
+
+
+
+
 
 
 
@@ -204,6 +132,7 @@ span.dirent-name a.normal {
 
 /*_________________________________________________________________________________________________________*/
 
+/*Farbe & Typografie______________________________________________________________________________________ */
 body, input, textarea, button, select, h1, h2, h3, td, .btn-white, .tabnav button, .wiki-top .op-btn, button {
 	font-family: 'helvetica neue', 'Segoe UI', -apple-system, BlinkMacSystemFont, arial, 'Segoe UI', sans-serif;
 	text-rendering: optimizeLegibility;
@@ -215,8 +144,36 @@ body, input, textarea, button, select, h1, h2, h3, td, .side-tabnav h3.hd, .side
 	color: #37474F;
 }
 
+a, button, .btn-white, .tabnav button, .repo-file-list-topbar .op-btn, .wiki-top .op-btn, input[type=button], input[type=submit], input.submit, button.submit, #send-download-link, #send-upload-link, .big-btn-link {
+	font-weight: 500;
+	text-decoration:none;
+}
+
+/*Dark green text*/
+a, .side-tabnav-tabs .tab a:hover, .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab [class^="sf2-icon-"]:hover, .dropdown-menu a:hover, .left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .op-target, .op-icon.sf2-x, .op-icon.sf2-x:hover, .grid-item .text-link.hl, .current-version, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .left-right-tabs-nav a:hover .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .tab-cur [class^="sf2-icon-"]:hover, li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur, .left-right-tabs-nav a:hover {
+	color: #00838F;
+}
+
+/*Light green Background*/
+.side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab a:hover, .dropdown-menu a:hover, .current-version, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .left-right-tabs-nav a:hover .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .tab-cur [class^="sf2-icon-"]:hover, li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur, .ui-state-hover, .left-right-tabs-nav a:hover {
+	background: #B2EBF2;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Layout______________________________________________________________________________________ */
 #main, #footer {
-	width: 100%;
+	width: 100% !important;
 	min-width: 1024px;
 	box-sizing: border-box;
 }
@@ -236,38 +193,6 @@ body, input, textarea, button, select, h1, h2, h3, td, .side-tabnav h3.hd, .side
 	padding: 40px;
 }
 
-a {
-	font-weight: 500;
-	text-decoration:none;
-}
-
-/*Dark green text*/
-a, .side-tabnav-tabs .tab a:hover, .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab [class^="sf2-icon-"]:hover, .dropdown-menu a:hover, .left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .op-target, .op-icon.sf2-x, .op-icon.sf2-x:hover, .grid-item .text-link.hl, .current-version {
-	color: #00838F;
-}
-
-/*Light green Background*/
-.side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab a:hover, .dropdown-menu a:hover, .current-version {
-	background: #B2EBF2;
-}
-
-.left-right-tabs-nav .ui-state-active a, .left-right-tabs-nav .ui-state-active a:hover, .left-right-tabs-nav a:hover, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab-cur [class^="sf2-icon-"], .tab-cur [class^="sf2-icon-"]:hover, li.tab.tab-cur > a:hover, li.tab-cur > a:hover, li.tab-cur {
-	color: white !important;
-	background: #13a3b1;
-}
-
-.tab:hover a, .tab:hover [class^="sf2-icon-"] {
-	color: rgba(70, 153, 158, 1);
-}
-
-.side-tabnav-tabs .tab a {
-	font-size: 14px;
-}
-
-.tab [class^="sf2-icon-"] {
-	color: #81939e !important;
-}
-
 #header {
 	box-shadow: 0 2px 4px rgba(70, 90, 99, 0.2), 0 1px 0px rgba(70, 90, 99, 0.2);
 	background: #263238;
@@ -284,23 +209,81 @@ a, .side-tabnav-tabs .tab a:hover, .side-tabnav-tabs .tab-cur [class^="sf2-icon-
 	margin: 0 32px;
 }
 
-form#top-search-form.search-form.fleft {
-	margin-right: 30px;
+#main {
+	min-height: calc(100vh - 159px - 60px - 40px);
 }
 
-#top-search-form .search-input {
-	width: 510px;
+#main-panel {
+	margin-top: 40px;
+	padding: 0 40px;
+	box-sizing: border-box;
 }
 
-a, button {
-	font-weight: 500;
+.narrow-main-panel {
+	width: 710px;
+	margin-right: auto;
+	margin-left: auto;
 }
 
-input, button, input[type=submit], input[type=button], input.submit, .btn-link, .fileinput-button, select, .side-tabnav-tabs .tab, #right-panel .hd, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab a:hover, .messages .success {
+
+
+
+
+
+
+
+
+
+/*Buttons & Input______________________________________________________________________________________ */
+input, button, input[type=submit], input[type=button], input.submit, .btn-link, .fileinput-button, select, .side-tabnav-tabs .tab, #right-panel .hd, .side-tabnav-tabs .tab-cur a, .side-tabnav-tabs .tab-cur a:hover, .side-tabnav-tabs .tab a:hover, .messages .success, .op-confirm, .left-right-tabs-nav a, #right-panel .hd, .tabnav, .repo-file-list-topbar, .commit-list-topbar, .file-audit-list-topbar, .wiki-top, #dir-view .repo-op  {
 	border-radius: 4px;
 }
 
+button, .btn-white, .tabnav button, .repo-file-list-topbar .op-btn, .wiki-top .op-btn, input[type=button], input[type=submit], input.submit, button.submit, #send-download-link, #send-upload-link, .big-btn-link, button.yes, button.no  {
+	padding: 5px 10px;
+}
 
+/*Weiße Button*/
+.btn-white, .tabnav button, .repo-file-list-topbar .op-btn, .wiki-top .op-btn, input[type=button]{
+	background: linear-gradient( #fff, #eee);
+	margin-right: 4px;
+	height: 30px;
+}
+
+/*Grüne Button*/
+input[type=submit], input.submit, button.submit, #send-download-link, #send-upload-link, .big-btn-link, input[type=submit]:hover, input.submit:hover, button.submit:hover, #send-download-link:hover, #send-upload-link:hover, .big-btn-link:hover {
+	background: linear-gradient( #129fad, #0F848F);
+	border-color: #0F848F;
+	color: white;
+}
+
+
+input[type=submit]:hover, input.submit:hover, button.submit:hover, #send-download-link:hover, #send-upload-link:hover, .big-btn-link:hover {
+	opacity: .9;
+}
+
+button.yes {
+	background: linear-gradient(#FF5722, #E64A19);
+	border-color: #BF360C;
+	color: white;
+}
+
+.btn-white * {
+  vertical-align: initial !important;
+}
+
+
+/*Tabs______________________________________________________________________________________ */
+.tab [class^="sf2-icon-"] {
+	color: #81939e !important;
+}
+
+.tab:hover a, .tab:hover [class^="sf2-icon-"] {
+	color: #0F848F;
+}
+.side-tabnav-tabs .tab a {
+	font-size: 14px;
+}
 
 li.tab-cur {
 	background: none;
@@ -310,37 +293,52 @@ li.tab-cur:hover a {
 	color: white;
 }
 
-#right-panel .hd, .tabnav, .repo-file-list-topbar, .commit-list-topbar, .file-audit-list-topbar, .wiki-top, #dir-view .repo-op {
-	border-radius: 4px;
-	margin-bottom: 0;
+.left-right-tabs-nav a {
+	padding: 7px 14px;
+}
+.side-tabnav-tabs .tab a {
+	line-height: 48px;
+	height: 48px;
+	padding: 0;
 }
 
-#dir-view .repo-op {
-	border-bottom: 0;
+.side-tabnav-tabs .tab .grp-list a {
+	line-height: 32px;
+	height: 32px;
+}
+
+.side-tabnav-tabs .tab-cur a {
+	font-weight: 500;
+}
+
+#tab-cur-clear-fix {
+	background: initial;
+	color: #333 !important;
+	font-weight: normal;
+}
+
+#tab-cur-clear-fix span{
+	background: initial;
+	color: #81939e !important;
 }
 
 
-#notifications .sf2-icon-bell {
-	color: #92c0c2;
+
+
+
+
+
+
+
+
+
+/*Navi______________________________________________________________________________________ */
+form#top-search-form.search-form.fleft {
+	margin-right: 30px;
 }
 
-button {
-	padding: 5px 10px;
-}
-
-thead td, thead th {
-	padding: 14px 3px;
-}
-
-
-
-#left-panel h3, div.hd.w100.ovhd h3.fleft {
-	font-size:14px;
-	font-weight: 600;
-}
-
-.op-icon.sf2-x:hover, .op-icon.sf2-x:focus {
-	text-decoration: none;
+#top-search-form .search-input {
+	width: 510px;
 }
 
 #top-search-form .search-input {
@@ -354,12 +352,52 @@ thead td, thead th {
 #top-search-form {
 	margin-top: 0;
 }
-
 .search-form .search-submit {
 	width: 36px;
 	height: 36px;
 	background: rgb(58, 72, 80);
 	color: white;
+}
+
+#notifications {
+	margin: 4px 0 0 17px;
+}
+
+#notifications .sf2-icon-bell {
+	font-size: 36px;
+	color: #92c0c2;
+}
+
+#notifications .num {
+	background: #FF3D00;
+	border-color: #FF3D00;
+	line-height: 25px;
+	height: 25px;
+	width: 25px;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 13px;
+	padding: 0;
+	top: -9px;
+	left: 17px;
+}
+
+
+
+
+
+
+
+
+
+/*Werkzeugleiste______________________________________________________________________________________ */
+#right-panel .hd, .tabnav, .repo-file-list-topbar, .commit-list-topbar, .file-audit-list-topbar, .wiki-top, #dir-view .repo-op {
+	margin-bottom: 0;
+}
+
+#dir-view .repo-op {
+	border-bottom: 0;
+	position: initial;
 }
 
 #js-switch-list-view {
@@ -377,57 +415,36 @@ thead td, thead th {
 	border-color: #00838F;
 }
 
-
-
-#notifications {
-	margin: 4px 0 0 17px;
+#right-panel h3:first-child {
+	margin-bottom: 4px;
 }
 
-#notifications .sf2-icon-bell {
-	font-size: 36px;
+#right-panel .hd, .tabnav, .wiki-top {
+	height: 48px;
+	box-sizing: border-box;
 }
 
 
-.btn-white, .tabnav button, .repo-file-list-topbar .op-btn, .wiki-top .op-bt n{
-	background: linear-gradient( #fff, #eee);
+
+
+
+
+
+/*Dateiliste______________________________________________________________________________________ */
+thead td, thead th {
+	padding: 14px 3px;
+}
+
+#left-panel h3, div.hd.w100.ovhd h3.fleft {
+	font-size:14px;
 	font-weight: 500;
-	margin-right: 4px;
-	height: 30px;
 }
 
-input[type=submit], input.submit, button.submit, #send-download-link, #send-upload-link {
-	background: linear-gradient( #129fad, #0F848F);
-	border-color: #0F848F;
-	color: white
-}
-
-input[type=submit]:hover, input.submit:hover, button.submit:hover, #send-download-link, #send-upload-link {
-	opacity: .9;
-	background: linear-gradient( #129fad, #0F848F);
-	border-color: #0F848F;
-	color: white
+.op-icon.sf2-x:hover, .op-icon.sf2-x:focus {
+	text-decoration: none;
 }
 
 .web-setting-form .submit, .inline-rename-form .submit {
-	color: white;
-}
-
-#footer {
-	margin-top: 0;
-	padding: 40px;
-	background: #0F848F;
-	margin: initial;
-}
-
-#footer h4 {
-	font-weight: 500;
-	font-size: 16px;
-	color: white;
-}
-
-#footer a, #footer p {
-	font-weight: 400;
-	font-size: 12px;
 	color: white;
 }
 
@@ -436,152 +453,11 @@ input[type=submit]:hover, input.submit:hover, button.submit:hover, #send-downloa
 	background-color: #fcf8e3;
 	border-color: #faebcc;
 	box-shadow: none;
+	text-align: center;
 }
 
 .empty-tips p, .empty-tips h2 {
 	color: #8a6d3b;
-}
-
-#simplemodal-container {
-	animation: fadein 0.5s;
-	-moz-animation: fadein 0.5s; /* Firefox */
-	-webkit-animation: fadein 0.5s; /* Safari and Chrome */
-	-o-animation: fadein 0.5s; /* Opera */
-}
-
-
-
-@keyframes fadein {
-	from {
-		opacity:0;
-		transform: translateY(-200px);
-		transform: ;
-
-	}
-	to {
-		opacity:1;
-		transform: translateY(0px);
-	}
-}
-
-.mfp-zoom-out-cur {
-	animation: grow .75s;
-	-moz-animation: grow .75s; /* Firefox */
-	-webkit-animation: grow .75s; /* Safari and Chrome */
-	-o-animation: grow .75s; /* Opera */
-	box-shadow: 0 2px 4px rgba(70, 90, 99, 0.075), 0 1px 0px rgba(70, 90, 99, 0.075);
-
-}
-
-@keyframes grow {
-	from {
-		opacity:0;
-	}
-	to {
-		opacity:1;
-	}
-}
-
-.popover, .messages .success {
-  -webkit-backface-visibility: visible !important;
-  backface-visibility: visible !important;
-  animation: flipInX 0.2s;
-	-moz-animation: flipInX 0.2s; /* Firefox */
-	-webkit-animation: flipInX 0.2s; /* Safari and Chrome */
-	-o-animation: flipInX 0.2s; /* Opera */
-
-}
-
-@keyframes flipInX {
-  from {
-    -webkit-transform: rotate3d(1, 0, 0, 90deg);
-    transform: rotate3d(1, 0, 0, 90deg);
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
-    opacity: 0;
-  }
-
-
-  to {
-    z-index: 5000;
-  }
-}
-
-
-#simplemodal-container .left-right-tabs-nav .ui-state-active a {
-	font-weight: 500;
-}
-
-.left-right-tabs-nav a {
-	padding: 7px 14px;
-}
-
-h3#dialogTitle.hd {
-	margin: -20px;
-	padding: 20px;
-	background: #F5F7F9;
-	margin-bottom: 20px;
-	border-radius: 4px 4px 0px 0px;
-	border-bottom: 1px solid #EEEEEE;
-
-}
-
-.side-tabnav-tabs .tab a {
-	line-height: 48px;
-	height: 48px
-}
-
-.side-tabnav-tabs .tab a {
-	padding: 0;
-
-}
-
-.side-tabnav-tabs .tab .grp-list a {
-	line-height: 32px;
-	height: 32px;
-}
-
-#tab-cur-clear-fix {
-	background: initial;
-	color: #333 !important;
-	font-weight: normal;
-}
-
-#tab-cur-clear-fix span{
-	background: initial;
-	color: #81939e !important;
-}
-
-img.thumbnail {
-	max-width: 32px;
-	max-height: 32px;
-	border-radius: 3px;
-}
-
-#account .manage {
-    position: absolute;
-    left: 33px;
-    top: -12px;
-}
-
-
-#main-panel {
-margin-top: 40px;
-padding: 0 40px;
-box-sizing: border-box;
-}
-
-#repo-create-form .checkbox-label {
-	margin: 7px 0;
-}
-
-#right-panel h3:first-child {
-	margin-bottom: 4px;
-}
-
-#right-panel .hd, .tabnav, .wiki-top {
-	height: 48px;
-box-sizing: border-box;
 }
 
 table {
@@ -594,7 +470,7 @@ tr {
 }
 
 td, th {
-    padding: 12px 3px;
+	padding: 12px 3px;
 }
 
 
@@ -613,19 +489,21 @@ td.dirent-icon {
 	display: block;
 }
 
+#repo-create-form .checkbox-label {
+	margin: 7px 0;
+}
 
-
-@media (min-width: 1680px) {
-	#left-panel {
-		width: 20%;
-	}
-
-	#right-panel {
-		width: 80%;
-	}
+span.dirent-name a.normal {
+	display: block;
 }
 
 
+
+
+
+
+
+/*Gruppen______________________________________________________________________________________ */
 .sf2-icon-allgroups:before {
 	content: "\e026";
 }
@@ -647,8 +525,280 @@ thead.vh {
 	padding: 14px 0;
 }
 
-.btn-white * {
-  vertical-align: initial !important;
+#group-toggle-btn {
+	background: #f5f7f9;
+	border-radius: 15px;
+	margin-top: 9px;
+	margin-right: 14px;
+	padding: 4px 10px;
+}
+
+#group-toggle-btn.icon-caret-left {
+	padding: 4px 12px 4px 10.8px;
+	margin-left: -0.6px;
+}
+
+#group-toggle-btn:focus {
+	border-color: #c5c5c5;
+}
+
+a#group-settings-icon:after {
+	content: "\f055";
+    font-size: 14px;
+    display: inline-block;
+    margin-left: -7px;
+    background: #F2F2F2;
+    color: #0F848F;
+    font-family: FontAwesome;
+}
+
+
+
+
+/*Footer______________________________________________________________________________________ */
+#footer {
+	margin-top: 0;
+	padding: 40px;
+	background: #0F848F;
+	margin: initial;
+}
+
+#footer h4 {
+	font-weight: 500;
+	font-size: 16px;
+	color: white;
+}
+
+#footer a, #footer p {
+	font-weight: 400;
+	font-size: 12px;
+	color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Modals______________________________________________________________________________________ */
+h3#dialogTitle.hd {
+	margin: -20px;
+	padding: 20px;
+	background: #F5F7F9;
+	margin-bottom: 20px;
+	border-radius: 4px 4px 0px 0px;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+#simplemodal-container .left-right-tabs-nav .ui-state-active a {
+	font-weight: 500;
+}
+
+.extended-options-btn {
+	cursor: pointer;
+}
+
+.extended-options-btn:hover {
+	text-decoration: none;
+	color: #469a9e;
+}
+#create-link {
+	margin-top: 8px;
+}
+.simplemodal-container {
+	height: 400px;
+}
+
+.simplemodal-container #email, .simplemodal-container #extra-msg, .simplemodal-container #u-email, .simplemodal-container #u-extra-msg {
+	width: calc(100% - 20px);
+}
+#repo-name {
+	width: calc(100% - 6px);
+	padding: 3px 3px;
+}
+
+#create-rep {
+	margin-top: 16px;
+}
+
+/*Erläuterung im Freigabe-Menü*/
+#share-popup .tip {
+	max-width: initial;
+	margin-top: 0;
+}
+
+#share-popup .tabs-panel, #folder-perm-tabs .tabs-panel, #repo-shared-links .tabs-panel, #repo-folder-perm .tabs-panel {
+	max-height: initial;
+}
+
+
+
+
+
+
+
+/*Footer______________________________________________________________________________________ */
+img.thumbnail {
+	max-width: 32px;
+	max-height: 32px;
+	border-radius: 3px;
+}
+
+#account .manage {
+	position: absolute;
+	left: 33px;
+	top: -12px;
+}
+
+
+
+
+
+
+
+/*Profileinstellungen______________________________________________________________________________________ */
+#user-basic-info {
+	box-sizing: border-box;
+	width: 100%;
+	float: left;
+}
+
+div#user-avatar-change, form#user-profile-settings {
+	width: 49%;
+	box-sizing: border-box;
+	display: inline-table;
+}
+
+form#user-profile-settings {
+	width: 49%;
+	box-sizing: border-box;
+	display: inline-table;
+}
+
+
+#user-avatar-change {
+	text-align: right;
+}
+#user-basic-info .avatar {
+	width: 155px;
+	height: 155px;
+	border-radius: 100%;
+	margin-top: 24px;
+}
+
+form#user-avatar-form.ovhd {
+	left: initial !important;
+	width: initial !important;
+	margin-top: 4px;
+
+}
+
+#user-avatar-form {
+	position: initial;
+}
+
+form#user-profile-settings input[type=submit] {
+	margin-left: 0 !important;
+}
+
+#user-profile-settings .input {
+	width: 100% !important;
+} 
+
+.setting-item {
+	margin-bottom: 70px;
+}
+
+#user-avatar-chg-btn {
+	width: 155px;
+	border-width: 0;
+	background: white;
+}
+
+
+
+
+
+
+
+
+
+/*Dateivorschau______________________________________________________________________________________ */
+#file-view {
+	margin: 20px -40px 0;
+}
+
+#file-view-tip {
+	border-width: 0;
+	box-shadow: none;
+	background: none;
+}
+
+
+
+
+
+
+
+
+
+
+/*Sonstiges______________________________________________________________________________________ */
+.dropdown-menu li a, .dropdown-menu a {
+	padding: 6px 12px;
+}
+
+.op-confirm {
+	padding: 20px;
+	padding-top: 15px;
+}
+
+/*Grüner Toast*/
+.messages .success {
+	padding: 15px 50px;
+	font-weight: 500;
+}
+.current-version {
+	font-size: 12px;
+	display: inline;
+	padding: 3px;
+	border-radius: 2px;
+	background: #00838F;
+	color: white;
+}
+
+.enable-mods-icon {
+	margin-right: 20px;
+}
+
+::-webkit-scrollbar {
+	display: none;
+	width: 0;
+}
+
+
+
+
+
+
+/*Media Queries______________________________________________________________________________________ */
+@media (min-width: 1680px) {
+	#left-panel {
+		width: 20%;
+	}
+
+	#right-panel {
+		width: 80%;
+	}
 }
 
 @media (max-width: 1024px) {
@@ -708,4 +858,80 @@ thead.vh {
 }
 
 
-  
+
+
+
+
+
+
+
+
+
+/*Animationen______________________________________________________________________________________ */
+#simplemodal-container {
+	animation: fadein 0.5s;
+	-moz-animation: fadein 0.5s; /* Firefox */
+	-webkit-animation: fadein 0.5s; /* Safari and Chrome */
+	-o-animation: fadein 0.5s; /* Opera */
+}
+
+
+
+@keyframes fadein {
+	from {
+		opacity:0;
+		transform: translateY(-200px);
+		transform: ;
+
+	}
+	to {
+		opacity:1;
+		transform: translateY(0px);
+	}
+}
+
+.mfp-zoom-out-cur {
+	animation: grow .75s;
+	-moz-animation: grow .75s; /* Firefox */
+	-webkit-animation: grow .75s; /* Safari and Chrome */
+	-o-animation: grow .75s; /* Opera */
+	box-shadow: 0 2px 4px rgba(70, 90, 99, 0.075), 0 1px 0px rgba(70, 90, 99, 0.075);
+
+}
+
+@keyframes grow {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
+}
+
+.popover, .messages .success {
+	-webkit-backface-visibility: visible !important;
+	backface-visibility: visible !important;
+	animation: flipInX 0.2s;
+	-moz-animation: flipInX 0.2s; /* Firefox */
+	-webkit-animation: flipInX 0.2s; /* Safari and Chrome */
+	-o-animation: flipInX 0.2s; /* Opera */
+
+}
+
+@keyframes flipInX {
+	from {
+		-webkit-transform: rotate3d(1, 0, 0, 90deg);
+		transform: rotate3d(1, 0, 0, 90deg);
+		-webkit-animation-timing-function: ease-in;
+		animation-timing-function: ease-in;
+		opacity: 0;
+	}
+
+
+	to {
+		z-index: 5000;
+	}
+}
+
+
+
